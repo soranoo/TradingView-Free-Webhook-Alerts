@@ -1,0 +1,21 @@
+# -----------* Email Service *-----------
+email_address = "YourEmail@example.com"
+login_password = "YourPassword"
+imap_server_address = "imap.gmail.com"
+imap_server_port = 993
+
+# --------------* Webhook *--------------
+webhook_urls = [
+    "Webhook URL",
+    ]
+
+# ----------------* Log *----------------
+# save log as a text file
+log_save = true
+
+# console log with color
+log_color = true
+
+# include the current time zone into the log
+log_time_zone = false
+

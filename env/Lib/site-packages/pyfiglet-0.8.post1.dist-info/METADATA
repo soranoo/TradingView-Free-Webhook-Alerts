@@ -1,0 +1,36 @@
+Metadata-Version: 2.0
+Name: pyfiglet
+Version: 0.8.post1
+Summary: Pure-python FIGlet implementation
+Home-page: https://github.com/pwaller/pyfiglet
+Author: Peter Waller (Thanks to Christopher Jones and Stefano Rivera)
+Author-email: p@pwaller.net
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Natural Language :: Japanese
+Classifier: Natural Language :: Bulgarian
+Classifier: Natural Language :: Bosnian
+Classifier: Natural Language :: Macedonian
+Classifier: Natural Language :: Russian
+Classifier: Natural Language :: Serbian
+Classifier: Operating System :: Unix
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.1
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Topic :: Text Processing
+Classifier: Topic :: Text Processing :: Fonts
+
+UNKNOWN
+
+
