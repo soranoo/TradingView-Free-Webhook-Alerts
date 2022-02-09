@@ -25,7 +25,7 @@ To install **TradingView-Free-Webhook-Alerts**, check out the [Getting Started g
 
 
 ## Notice
-* The program will read the coming email and mark it as read.
+* The program will read the incoming email and mark it as read.
 * It is suggested to create a new email account for the best performance.
 * If you are using Gmail as your email service provider, you should read through the following documents in order to protect your account from getting suspended; therefore, it is suggested to create a new Google account instead of using your main account.
   * [Gmail receiving limits](https://support.google.com/a/answer/1366776)

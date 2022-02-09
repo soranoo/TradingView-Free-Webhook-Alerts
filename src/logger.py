@@ -20,6 +20,7 @@ config = toml.load(f"{os.getcwd()}/config.toml")
 log_color = config.get("log_color")
 log_time_zone = config.get("log_time_zone")
 log_save = config.get("log_save")
+log_full_color = config.get("log_full_color")
 
 dir_path = os.getcwd() # logs path
 filename = "{:%d-%m-%Y}".format(datetime.now()) + ".log"
@@ -112,7 +113,7 @@ def create_logger(logFolder = ""):
     dateFormat  = "%d-%m-%Y %H:%M:%S %z" if log_time_zone else "%d-%m-%Y %H:%M:%S"
     logging.captureWarnings(True) # catch py waring message
     formatter_file = logging.Formatter("%(asctime)s   |  %(levelname)-8s | %(message)s", datefmt=dateFormat)
-    formatter_console_color = ColoredFormatter(f"{Colorcode.gray}%(asctime)s{Colorcode.reset}   |  %(log_color)s%(levelname)-8s%(reset)s | {Colorcode.white}%(message)s{Colorcode.reset}",
+    formatter_console_color = ColoredFormatter(f"{Colorcode.gray}%(asctime)s{Colorcode.reset}   |  %(log_color)s%(levelname)-8s%(reset)s | {'%(log_color)s' if log_full_color else Colorcode.white}%(message)s{Colorcode.reset}",
      datefmt=dateFormat, log_colors=log_colors)
     formatter_console = logging.Formatter("%(asctime)s   |  %(levelname)-8s | %(message)s", datefmt=dateFormat)
     logger = logging.getLogger("py.warnings") # catch py waring message

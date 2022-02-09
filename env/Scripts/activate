@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Code\TradingView-Free-Webhook-Alerts\env"
+VIRTUAL_ENV="D:\GitProjects\TradingView-Free-Webhook-Alerts\env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

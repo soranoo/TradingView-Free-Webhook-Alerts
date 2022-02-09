@@ -8,7 +8,6 @@
 ## Usage
 - [Setting up TradingView alert](#setting-up-tradingview-alert)
 - [Program Deployment](#program-deployment)
-- [EZ Tool](#ez-tool)
 
 <a name="installing-python-package"></a>
 ## 1. Installing the Python package dependencies
@@ -53,8 +52,3 @@ You must finish the following steps before using the program.
 ## 5. Program Deployment
 
 1. Run `py main.py` in the command prompt.
-
-<a name="ez-tool"></a>
-## 6. EZ Tool
-
-Run 'start-env.py' and the command prompt with the activated virtual environment will pop up.

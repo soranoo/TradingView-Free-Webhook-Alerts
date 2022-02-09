@@ -1,4 +1,6 @@
 config.toml
+start-env.py
+**/env
 **/logs
 **/data
 **/src/__pycache__

@@ -7,11 +7,12 @@ import time
 
 from rich import print as cprint
 from rich import traceback
+from imap_tools import MailBox
+from datetime import datetime, timezone
+from bs4 import BeautifulSoup
 
 from src.logger import log, Colorcode
 
-from imap_tools import MailBox
-from datetime import datetime, timezone
 
 traceback.install()
 
@@ -33,7 +34,7 @@ loop_duration_sample = []
 displaying_loop_duration = False
 
 # welcome message
-print(pyfiglet.figlet_format("TradingView\nFree Webhook"))
+cprint(pyfiglet.figlet_format("TradingView\nFree Webhook"))
 
 
 def send_webhook(payload):
@@ -79,8 +80,11 @@ def display_loop_duration(duration):
         
 
 def get_latest_email(mailbox):
-    for email in mailbox.fetch(limit=1, reverse=True):
-        return email
+    try:
+        for email in mailbox.fetch(limit=1, reverse=True):
+            return email
+    except:
+        return False
 
 def connect_imap_server():
     try:
@@ -100,24 +104,47 @@ def main():
     global last_email_uid
     log.info("Initializing...")
     mailbox = connect_imap_server()
-    last_email_uid = get_latest_email(mailbox).uid
+    latestEmail = get_latest_email(mailbox)
+    last_email_uid = int(latestEmail.uid) if latestEmail else False
     close_imap_connection(mailbox)
     log.info(f"Listening to IMP server({imap_server_address})...")
     while True:
         # ref: https://github.com/ikvk/imap_tools#actions-with-emails
         startTime = datetime.now()
         mailbox = connect_imap_server()
-        latestEmailUid = get_latest_email(mailbox).uid
-        uidDifferent = int(latestEmailUid)-int(last_email_uid)
+        latestEmail = get_latest_email(mailbox)
+        latestEmailUid = int(latestEmail.uid) if latestEmail else False
+        # check if inbox turn from empty to not empty
+        if not last_email_uid and latestEmailUid >= 0:
+            # giving a previous email uid
+            last_email_uid = latestEmailUid-1
+        uidDifferent = (latestEmailUid-last_email_uid) if latestEmailUid else -1
         if uidDifferent > 0:
             latestEmails = mailbox.fetch(limit=uidDifferent, reverse=True)
             for email in latestEmails:
                 if email.from_ in tradingview_alert_email_address:
+                    # get email content
+                    if email.text == "":
+                        try:
+                            ctx = BeautifulSoup(email.html, "html.parser")
+                            ctx = list(ctx.find_all("p"))[1].text
+                        except:
+                            log.warning("No content found in email.")
+                            ctx = ""
+                    else:
+                        ctx = email.text
+                    # check if json
+                    try:
+                        ctx = json.loads(ctx)
+                    except:
+                        ctx = email.text
+                    # stop display loop duration
                     if displaying_loop_duration:
                             display_loop_duration(-1)
-                    log.info(f"Sending webhook alert<{email.subject}>..., content: {email.text}")
+                    # send webhook
+                    log.info(f"Sending webhook alert<{email.subject}>, content: {ctx}")
                     try:
-                        send_webhook(email.text)
+                        send_webhook(ctx)
                         log.ok("Sent webhook alert successfully!")
                         log.info(f"The whole process taken {round(abs(datetime.now(timezone.utc)-email.date).total_seconds(),3)}s.")
                     except Exception as err:
@@ -134,4 +161,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        log.warning("The program has been stopped by user.")
+        log.warning("The program will shut down after 10s...")
+        time.sleep(10)
+        exit()
