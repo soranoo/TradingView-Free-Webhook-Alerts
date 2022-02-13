@@ -43,7 +43,7 @@ For example,
 * Remove all potential risks that may be caused by the programme, for example, Gmail account was suspended because of high-frequency IMAP action (No reports show any Gmail account has been suspended due to this programme currently.).
 
 ## Known Issues
-* No known issues
+* Inaccurate whole process time ([issue #3](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/3))
 
 ## Disclaimer
 I as the author assume no responsibility for errors or omissions in the contents of the Service.
