@@ -46,6 +46,7 @@ For example,
 
 ## Known Issues
 * Inaccurate whole process time ([issue #3](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/3))
+* [Rare] Sent duplicate alert ([issue #4](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/4))
 
 ## Disclaimer
 I as the author assume no responsibility for errors or omissions in the contents of the Service.
