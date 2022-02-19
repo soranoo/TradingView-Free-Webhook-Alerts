@@ -31,11 +31,6 @@ log_colors={
 			"WARNING":"yellow",
 			"ERROR":"red",
 			"CRITICAL":"purple",
-
-            "MSG":"cyan",
-            "EDIT":"yellow",
-            "DELETE":"red",
-            "EMBED": "blue",
 		}
 
 class Colorcode:
