@@ -30,6 +30,7 @@ tradingview_alert_email_address = ["noreply@tradingview.com"]
 # ---------------* Main *---------------
 
 last_email_uid = -1
+last_emails = []
 loop_duration_sample = []
 displaying_loop_duration = False
 
@@ -121,7 +122,11 @@ def main():
         uidDifferent = (latestEmailUid-last_email_uid) if latestEmailUid else -1
         if uidDifferent > 0:
             latestEmails = mailbox.fetch(limit=uidDifferent, reverse=True)
+            last_emails = []
             for email in latestEmails:
+                if email in last_emails:
+                    log.warning(f"Duplicate email found: {email.uid}")
+                    continue
                 if email.from_ in tradingview_alert_email_address:
                     # get email content
                     if email.text == "":
@@ -147,6 +152,7 @@ def main():
                         send_webhook(ctx)
                         log.ok("Sent webhook alert successfully!")
                         log.info(f"The whole process taken {round(abs(datetime.now(timezone.utc)-email.date).total_seconds(),3)}s.")
+                        last_emails.append(email)
                     except Exception as err:
                         log.error(f"Sent webhook failed, reason: {err}")
                 else:
