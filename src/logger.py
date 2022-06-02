@@ -16,13 +16,15 @@ import toml
 from datetime import datetime
 from colorlog import ColoredFormatter
 
-config = toml.load(f"{os.getcwd()}/config.toml")
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) # get current directory
+project_main_directory = os.path.dirname(__location__)
+
+config = toml.load(f"{project_main_directory}/config.toml")
 log_color = config.get("log_color")
 log_time_zone = config.get("log_time_zone")
 log_save = config.get("log_save")
 log_full_color = config.get("log_full_color")
 
-dir_path = os.getcwd() # logs path
 filename = "{:%d-%m-%Y}".format(datetime.now()) + ".log"
 log_colors={
 			"DEBUG":"white",
@@ -115,12 +117,12 @@ def create_logger(logFolder = ""):
     logger.setLevel(level=logging.DEBUG)
 
 	# create new folder if not exist
-    if logFolder != "" and not os.path.exists(dir_path+logFolder):
-        os.makedirs(dir_path+logFolder)
+    if logFolder != "" and not os.path.exists(project_main_directory+logFolder):
+        os.makedirs(project_main_directory+logFolder)
 
 	# file handler
     if log_save:
-        fileHandler = logging.FileHandler(dir_path+logFolder+"/"+filename, "a", "utf-8")
+        fileHandler = logging.FileHandler(project_main_directory+logFolder+"/"+filename, "a", "utf-8")
         fileHandler.setFormatter(formatter_file)
         logger.addHandler(fileHandler)
 

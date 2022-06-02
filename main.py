@@ -1,4 +1,3 @@
-import os
 import toml
 import pyfiglet
 import json
@@ -17,7 +16,6 @@ from src.logger import log, Colorcode
 traceback.install()
 
 # ---------------* Common *---------------
-cwd = os.getcwd()+"/"
 config = toml.load("config.toml")
 email_address = config.get("email_address")
 login_password = config.get("login_password")
