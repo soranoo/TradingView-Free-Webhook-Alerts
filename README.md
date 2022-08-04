@@ -33,10 +33,10 @@ For those who are seeking an alternative to Gmail: [LINK](https://github.com/sor
 Please feel free to contact me if you have any suggestions.
 
 
-## Features
+## :old_key: Features
 * No Pro/Pro+/Premium TradingView account requested.
   
-## How it works ?
+## :triangular_flag_on_post: How it works ?
 Check the inbox frequently and transfer the TradingView alert email into the webhook message.
 
 
