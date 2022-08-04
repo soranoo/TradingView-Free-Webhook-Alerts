@@ -1,7 +1,7 @@
 # -----------* Email Service *-----------
-email_address = "YourEmail@example.com"
+email_address = "YourEmail@hotmail.com / YourEmail@outlook.com"
 login_password = "YourPassword"
-imap_server_address = "imap.gmail.com"
+imap_server_address = "outlook.office365.com"
 imap_server_port = 993
 
 # --------------* Webhook *--------------

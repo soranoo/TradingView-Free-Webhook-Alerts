@@ -24,7 +24,7 @@ You must finish the following steps before using the program.
 2. Rename the copied file to `config.toml`.
 3. Open `config.toml` with any text editor you like.
 4. Fill in `email_address` and `login_password` with your email and password.
-5. Fill in `imap_server` and `imap_port` with your email server and port. (For example, if you are using Gamil, it will be `imap.gmail.com` and `993`.)
+5. Fill in `imap_server_address` and `imap_server_port` with your email server and port. (For example, if you are using Hotmail, it will be `outlook.office365.com` and `993`.)
 6. Fill in `webhook_urls` with your webhook service URLs.
 7. Save the config file.
 
@@ -35,8 +35,10 @@ You can adjust other settings on your own.
 
 You must finish the following steps before using the program.
 
+>:warning: **Gmail** is not longer SUPPORTED :warning: 
+
 1. Enable IMAP in your email account.
-2. If you are using Gamil as your email service provider, you have to switch on the "[Less secure apps](https://myaccount.google.com/lesssecureapps)" option.
+2. If you are using Microsoft(Hotmail/Outlook) as your email service provider, you have to switch say **YES** in `Let devices and apps use POP`([Setting ➜ Mail ➜ Sync email ➜ POP and IMAP](https://outlook.live.com/mail/0/options/mail/accounts/popImap)).
 
 <a name="setting-up-tradingview-alert"></a>
 ## 4. Setting up TradingView alert
