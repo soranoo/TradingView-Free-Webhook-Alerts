@@ -66,7 +66,6 @@ For example,
 
 ## :bug: Known Issues
 * Inaccurate whole process time ([issue #3](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/3))
-* [Rare] Sent duplicate alert ([issue #4](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/4))
 
 ## :robot: Useful Links
 * Update TradingView `Email-To-SMS`: [LINK](https://www.tradingview.com/support/solutions/43000474398-how-to-change-the-email-to-sms-address-used-for-alert-notifications/)
@@ -77,3 +76,4 @@ I as the author assume no responsibility for errors or omissions in the contents
 In no event shall I be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other torts, arising out of or in connection with the use of the Service or the contents of the Service. I reserve the right to make additions, deletions, or modifications to the contents of the Service at any time without prior notice.
 
 (Service refers to the **TradingView-Free-Webhook-Alerts**.)
+

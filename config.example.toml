@@ -4,6 +4,12 @@ login_password = "YourPassword"
 imap_server_address = "outlook.office365.com"
 imap_server_port = 993
 
+# auto reconnect to IMAP server when disconnected
+imap_auto_reconnect = true
+
+# wait time (seconds) before reconnecting to IMAP server
+imap_auto_reconnect_wait = 10
+
 # --------------* Webhook *--------------
 webhook_urls = [
     "Webhook URL",
