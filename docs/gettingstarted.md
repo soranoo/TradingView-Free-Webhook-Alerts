@@ -37,8 +37,8 @@ You must finish the following steps before using the program.
 
 >:warning: **Gmail** is not longer SUPPORTED :warning: 
 
+If you are using Microsoft(Hotmail/Outlook) as your email service provider, you can skip step 1.
 1. Enable IMAP in your email account.
-2. If you are using Microsoft(Hotmail/Outlook) as your email service provider, you have to switch say **YES** in `Let devices and apps use POP`([Setting ➜ Mail ➜ Sync email ➜ POP and IMAP](https://outlook.live.com/mail/0/options/mail/accounts/popImap)).
 
 <a name="setting-up-tradingview-alert"></a>
 ## 4. Setting up TradingView alert
