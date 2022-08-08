@@ -77,3 +77,6 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 
 (Service refers to the **TradingView-Free-Webhook-Alerts**.)
 
+## :coffee: Donation
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/soranoo)
