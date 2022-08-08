@@ -79,4 +79,4 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 
 ## :coffee: Donation
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/soranoo)
+[!["Donation"](https://raw.githubusercontent.com/soranoo/Donation/main/resources/image/DonateBtn.png)](https://github.com/soranoo/Donation) <- click me~
