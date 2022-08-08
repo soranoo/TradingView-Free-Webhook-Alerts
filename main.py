@@ -126,7 +126,7 @@ def connect_imap_server():
             shutdown()
         log.warning(f"The program will try to reconnect after {imap_auto_reconnect_wait}s...")
         time.sleep(imap_auto_reconnect_wait)
-        return mailbox
+        main()
 
 def close_imap_connection(mailbox):
     mailbox.logout()
@@ -138,7 +138,7 @@ def main():
     latest_email = get_latest_email(mailbox)
     last_email_uid = int(latest_email.uid) if latest_email else False
     close_imap_connection(mailbox)
-    log.info(f"Listening to IMP server({imap_server_address})...")
+    log.info(f"Listening to IMAP server({imap_server_address})...")
     while True:
         # ref: https://github.com/ikvk/imap_tools#actions-with-emails
         start_time = datetime.now()
