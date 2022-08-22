@@ -3,6 +3,7 @@ import pyfiglet
 import json
 import requests
 import time
+import os
 
 from rich import print as cprint
 from rich import traceback
@@ -14,9 +15,10 @@ from requests.adapters import HTTPAdapter, Retry
 from src.logger import log, Colorcode
 
 traceback.install()
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) # get current directory
 
 # ---------------* Common *---------------
-config = toml.load("config.toml")
+config = toml.load(os.path.join(__location__, "config.toml"))
 email_address = config.get("email_address")
 login_password = config.get("login_password")
 imap_server_address = config.get("imap_server_address")
