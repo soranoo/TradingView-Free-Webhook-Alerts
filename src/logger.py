@@ -1,7 +1,5 @@
-# -----------------* Code-Based From *-----------------
-# https://shian420.pixnet.net/blog/post/350291572-%5Bpython%5D-logging-幫你紀錄任何訊息
-# -----------------------------------------------------
 # --------------------* reference *--------------------
+# https://shian420.pixnet.net/blog/post/350291572-%5Bpython%5D-logging-幫你紀錄任何訊息
 # https://titangene.github.io/article/python-logging.html
 # https://www.w3schools.com/python/gloss_python_date_format_codes.asp
 # https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
@@ -10,26 +8,40 @@
 
 import logging
 import os
-import colorama
-import toml
+try:
+    import colorama
+except ImportError:
+    print("<colorama> is not installed, <colorama> will be install automatically.")
+    os.system("pip install colorama")
+    import colorama
+try:
+    import toml
+except ImportError:
+    print("<toml> is not installed, <toml> will be install automatically.")
+    os.system("pip install toml")
+    import toml
+try:
+    from colorlog import ColoredFormatter
+except ImportError:
+    print("<colorlog> is not installed, <colorlog> will be install automatically.")
+    os.system("pip install colorlog")
+    from colorlog import ColoredFormatter
 
 from datetime import datetime
-from colorlog import ColoredFormatter
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) # get current directory
 project_main_directory = os.path.dirname(__location__)
 
 config = toml.load(f"{project_main_directory}/config.toml")
-log_color = config.get("log_color")
-log_time_zone = config.get("log_time_zone")
-log_save = config.get("log_save")
-log_full_color = config.get("log_full_color")
+log_with_colors = config.get("log_color")
+log_with_time_zone = config.get("log_time_zone")
+save_log = config.get("save_log")
+log_with_full_colors = config.get("log_full_color")
 
 filename = "{:%d-%m-%Y}".format(datetime.now()) + ".log"
 log_colors={
 			"DEBUG":"white",
 			"INFO":"cyan",
-			"OK":"green",
 			"WARNING":"yellow",
 			"ERROR":"red",
 			"CRITICAL":"purple",
@@ -56,7 +68,7 @@ class Colorcode:
 # log.critical("OH NO everything is on fire")
 
 # ---------------* main *---------------
-def add_logging_level(levelName, levelNum, methodName=None):
+def add_logging_level(levelName, levelNum, log_color, methodName=None):
     """
     Comprehensively adds a new logging level to the `logging` module and the
     currently configured logging class.
@@ -66,20 +78,11 @@ def add_logging_level(levelName, levelNum, methodName=None):
     itself and the class returned by `logging.getLoggerClass()` (usually just
     `logging.Logger`). If `methodName` is not specified, `levelName.lower()` is
     used.
+    `log_color` is the color of that level log message.
 
     To avoid accidental clobberings of existing attributes, this method will
     raise an `AttributeError` if the level name is already an attribute of the
     `logging` module or if the method name is already present 
-
-    Example
-    -------
-    >>> addLoggingLevel('TRACE', logging.DEBUG - 5)
-    >>> logging.getLogger(__name__).setLevel("TRACE")
-    >>> logging.getLogger(__name__).trace('that worked')
-    >>> logging.trace('so did this')
-    >>> logging.TRACE
-    5
-
     """
     if not methodName:
         methodName = levelName.lower()
@@ -101,18 +104,19 @@ def add_logging_level(levelName, levelNum, methodName=None):
         logging.log(levelNum, message, *args, **kwargs)
 
     logging.addLevelName(levelNum, levelName)
+    log_colors.update({str(levelName):str(log_color)})
     setattr(logging, levelName, levelNum)
     setattr(logging.getLoggerClass(), methodName, logForLevel)
     setattr(logging, methodName, logToRoot)
 
 def create_logger(logFolder = ""):
 	# config
-    dateFormat  = "%d-%m-%Y %H:%M:%S %z" if log_time_zone else "%d-%m-%Y %H:%M:%S"
+    dateFormat  = "%d-%m-%Y %H:%M:%S %z" if log_with_time_zone else "%d-%m-%Y %H:%M:%S"
     logging.captureWarnings(True) # catch py waring message
-    formatter_file = logging.Formatter("%(asctime)s   |  %(levelname)-8s | %(message)s", datefmt=dateFormat)
-    formatter_console_color = ColoredFormatter(f"{Colorcode.gray}%(asctime)s{Colorcode.reset}   |  %(log_color)s%(levelname)-8s%(reset)s | {'%(log_color)s' if log_full_color else Colorcode.white}%(message)s{Colorcode.reset}",
+    formatter_file = logging.Formatter("%(asctime)s | %(levelname)-9s | %(message)s", datefmt=dateFormat)
+    formatter_console_color = ColoredFormatter(f"{Colorcode.gray}%(asctime)s{Colorcode.reset} | %(log_color)s%(levelname)-9s%(reset)s | {Colorcode.white if not log_with_full_colors else '%(log_color)s'}%(message)s{Colorcode.reset}",
      datefmt=dateFormat, log_colors=log_colors)
-    formatter_console = logging.Formatter("%(asctime)s   |  %(levelname)-8s | %(message)s", datefmt=dateFormat)
+    formatter_console = logging.Formatter("%(asctime)s | %(levelname)-9s | %(message)s", datefmt=dateFormat)
     logger = logging.getLogger("py.warnings") # catch py waring message
     logger.setLevel(level=logging.DEBUG)
 
@@ -121,7 +125,7 @@ def create_logger(logFolder = ""):
         os.makedirs(project_main_directory+logFolder)
 
 	# file handler
-    if log_save:
+    if save_log:
         fileHandler = logging.FileHandler(project_main_directory+logFolder+"/"+filename, "a", "utf-8")
         fileHandler.setFormatter(formatter_file)
         logger.addHandler(fileHandler)
@@ -129,7 +133,7 @@ def create_logger(logFolder = ""):
 	# console handler
     consoleHandler = logging.StreamHandler()
     consoleHandler.setLevel(logging.DEBUG)
-    if log_color:
+    if log_with_colors:
         consoleHandler.setFormatter(formatter_console_color)
     else:
         consoleHandler.setFormatter(formatter_console)
@@ -139,5 +143,5 @@ def create_logger(logFolder = ""):
 
 # ---------------* initialization *---------------
 colorama.init()
-add_logging_level("OK", logging.INFO+1)
+add_logging_level("OK", logging.INFO+1, "green")
 log = create_logger("\logs")

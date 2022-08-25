@@ -4,6 +4,7 @@ Project start on 01-02-2022
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![GitHub repo size](https://img.shields.io/github/repo-size/soranoo/TradingView-Free-Webhook-Alerts)
 ![GitHub top language](https://img.shields.io/github/languages/top/soranoo/TradingView-Free-Webhook-Alerts)
+&nbsp;&nbsp;&nbsp;[![Donation](https://img.shields.io/static/v1?label=Donation&message=❤️&style=social)](https://github.com/soranoo/Donation)
 
 Providing the free webhook service to the basic plan users in TradingView.
 
@@ -78,5 +79,4 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 (Service refers to the **TradingView-Free-Webhook-Alerts**.)
 
 ## :coffee: Donation
-
 [!["Donation"](https://raw.githubusercontent.com/soranoo/Donation/main/resources/image/DonateBtn.png)](https://github.com/soranoo/Donation) <- click me~

@@ -1,9 +1,7 @@
-import toml
 import pyfiglet
 import json
 import requests
 import time
-import os
 
 from rich import print as cprint
 from rich import traceback
@@ -12,13 +10,12 @@ from datetime import datetime, timezone
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter, Retry
 
-from src.logger import log, Colorcode
+from src import config, http_status
+from src import log, Colorcode
 
 traceback.install()
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__))) # get current directory
 
 # ---------------* Common *---------------
-config = toml.load(os.path.join(__location__, "config.toml"))
 email_address = config.get("email_address")
 login_password = config.get("login_password")
 imap_server_address = config.get("imap_server_address")
@@ -57,6 +54,8 @@ def post_request(webhook_url:str, payload:str, headers:str):
     session.mount('https://', adapter)
     # send request
     response = session.post(webhook_url, data=json.dumps(payload), headers=headers)
+    if (response.status_code != None):
+        log.debug(f"Webhook response: <{response.status_code}>: {http_status[str(response.status_code)]}")
     return response
 
 def send_webhook(payload:str):
