@@ -2,20 +2,22 @@ import pyfiglet
 import json
 import requests
 import time
+import os
 
 from rich import print as cprint
 from rich import traceback
-from imap_tools import MailBox
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter, Retry
 
 from src import config, http_status
-from src import log, Colorcode
+from src import log, Colorcode, add_logging_level, log_levels
+from src import EmailListener
+from src import project_main_directory
 
 traceback.install()
 
-# ---------------* Common *---------------
+# ---------------* Config *---------------
 email_address = config.get("email_address")
 login_password = config.get("login_password")
 imap_server_address = config.get("imap_server_address")
@@ -65,41 +67,8 @@ def send_webhook(payload:str):
         }
     for webhook_url in webhook_urls:
         post_request(webhook_url, payload, headers)
-
-def display_loop_duration(duration:float):
-    global loop_duration_sample
-    global displaying_loop_duration
-
-    prefix = "Average loop duration(smaller is better): "
-    round_num = 5
-    max_sample_num = 20
-    if duration != -1:
-        displaying_loop_duration = True
-        def average(array):
-            return round(sum(array)/len(array), round_num)
-        def fillZero(num):
-            if "." not in str(num):
-                return str(num)+"."+"0"*round_num
-            str_diff = round_num - len(str(num).split(".")[1])
-            if str_diff > 0:
-                num = str(num)+"0"*str_diff
-            return num
-        duration = duration.total_seconds()
-        loop_duration_sample.append(duration)
-        # control number of sample
-        if len(loop_duration_sample) > max_sample_num:
-            del loop_duration_sample[0]
-        # get average duration
-        avg = str(fillZero(average(loop_duration_sample)))
-        output = prefix+avg+"s"
-    else:
-        displaying_loop_duration = False
-        avg = str("0."+"0"*(round_num+3))
-        textCount = len(prefix+avg)
-        output = " "*textCount
-    print(f"{Colorcode.magenta}{output}{Colorcode.reset}", end="\r")
         
-def add_email_to_history(email_uid:int):
+def add_email_to_history(email_uid:int) -> bool:
     global email_history
     if email_uid in email_history:
         return False
@@ -109,18 +78,29 @@ def add_email_to_history(email_uid:int):
         del email_history[0]
     return True
 
-def get_latest_email(mailbox:MailBox):
+# not in use
+def extract_content_from_html(html:str) -> str:
     try:
-        for email in mailbox.fetch(limit=1, reverse=True):
-            return email
+        ctx = BeautifulSoup(html, "html.parser")
+        ctx = list(ctx.find_all("p"))[1].text
+    except:
+        log.warning("No content found in email.")
+        ctx = ""
+    return ctx()
+
+def get_latest_email(el:EmailListener):
+    try:
+        for _, data in el.scrape(search_filter="ALL", latest_only=True, no_log=True).items():
+            return data
     except:
         return False
 
-def connect_imap_server():
+def connect_imap_server() -> EmailListener:
     try:
-        mailbox = MailBox(host=imap_server_address, port=imap_server_port)
-        mailbox.login(email_address, login_password, initial_folder="INBOX")
-        return mailbox
+        el = EmailListener(email=email_address, app_password=login_password, folder="INBOX", attachment_dir=os.path.join(project_main_directory, "temp", "emails"), logger=log.debug, imap_address=imap_server_address, imap_port=imap_server_port)
+        # Log into the IMAP server
+        el.login()
+        return el
     except Exception as err:
         log.error(f"Here an error has occurred, reason: {err}")
         if (not imap_auto_reconnect):
@@ -129,71 +109,55 @@ def connect_imap_server():
         time.sleep(imap_auto_reconnect_wait)
         main()
 
-def close_imap_connection(mailbox):
-    mailbox.logout()
+def on_email_received(el, msgs):
+    for data in msgs.values():
+        email_uid = int(data["Email_UID"])
+        email_content = data["Plain_Text"]
+        email_subject = data["Subject"]
+        email_date = data["Date"]
+        from_address = data["From_Address"]
+        last_email_uid = email_history[-1]
+
+        if (last_email_uid < 0):
+            last_email_uid = email_uid-1
+
+        if (email_uid in email_history) or int(email_uid) <= last_email_uid:
+            continue
+
+        if from_address not in tradingview_alert_email_address:
+            # if not target email... mark unseen?
+            log.info(f"Email from {from_address} is not from TradingView, SKIP.")
+            continue
+
+        # check if json
+        try:
+            email_content = json.loads(email_content)
+        except:
+            pass
+        # send webhook
+        log.info(f"Sending webhook alert<{email_subject}>, content: {email_content}")
+        try:
+            send_webhook(email_content)
+            log.ok("Sent webhook alert successfully!")
+            log.info(f"The whole process taken {round((datetime.now(timezone.utc) - email_date).total_seconds(), 3)}s.")
+            add_email_to_history(email_uid)
+        except Exception as err:
+            log.error(f"Sent webhook failed, reason: {err}")
 
 def main():
     global last_email_uid
     log.info("Initializing...")
-    mailbox = connect_imap_server()
-    latest_email = get_latest_email(mailbox)
-    last_email_uid = int(latest_email.uid) if latest_email else False
-    close_imap_connection(mailbox)
+    el = connect_imap_server()
+    latest_email = get_latest_email(el)
+    last_email_uid = int(latest_email["Email_UID"]) if latest_email else False
+    if (last_email_uid is not False):
+        add_email_to_history(last_email_uid)
+    else:
+        add_email_to_history(-1)
+
+    # Start listening to the inbox
     log.info(f"Listening to IMAP server({imap_server_address})...")
-    while True:
-        # ref: https://github.com/ikvk/imap_tools#actions-with-emails
-        start_time = datetime.now()
-        mailbox = connect_imap_server()
-        latest_email = get_latest_email(mailbox)
-        latest_emailUid = int(latest_email.uid) if latest_email else False
-        add_email_to_history(latest_emailUid)
-        # check if inbox turn from empty to not empty
-        if not last_email_uid and latest_emailUid >= 0:
-            # giving a previous email uid
-            last_email_uid = latest_emailUid-1
-        uidDifferent = (latest_emailUid-last_email_uid) if latest_emailUid else -1
-        if uidDifferent > 0:
-            latest_emails = mailbox.fetch(limit=uidDifferent, reverse=True)
-            for email in latest_emails:
-                if (email.uid in email_history) or int(email.uid) <= last_email_uid:
-                    continue
-                if email.from_ in tradingview_alert_email_address:
-                    # get email content
-                    if email.text == "":
-                        try:
-                            ctx = BeautifulSoup(email.html, "html.parser")
-                            ctx = list(ctx.find_all("p"))[1].text
-                        except:
-                            log.warning("No content found in email.")
-                            ctx = ""
-                    else:
-                        ctx = email.text
-                    # check if json
-                    try:
-                        ctx = json.loads(ctx)
-                    except:
-                        ctx = email.text
-                    # stop display loop duration
-                    if displaying_loop_duration:
-                            display_loop_duration(-1)
-                    # send webhook
-                    log.info(f"Sending webhook alert<{email.subject}>, content: {ctx}")
-                    try:
-                        send_webhook(ctx)
-                        log.ok("Sent webhook alert successfully!")
-                        log.info(f"The whole process taken {round(abs(datetime.now(timezone.utc)-email.date).total_seconds(),3)}s.")
-                        add_email_to_history(email.uid)
-                    except Exception as err:
-                        log.error(f"Sent webhook failed, reason: {err}")
-                else:
-                    # if not target email... mark unseen?
-                    # code
-                    pass
-        else:
-            pass
-        display_loop_duration(datetime.now()-start_time)
-        last_email_uid = latest_emailUid
-        close_imap_connection(mailbox)
+    el.listen(-1, process_func=on_email_received)
 
 if (imap_auto_reconnect_wait <= 0):
     log.error("\"imap_auto_reconnect_wait\"(config.toml) must be greater than 0")
@@ -201,6 +165,13 @@ if (imap_auto_reconnect_wait <= 0):
 
 if __name__ == "__main__":
     try:
+        main()
+    except Exception as err:
+        log.error(f"Here an error has occurred, reason: {err}")
+        if (not imap_auto_reconnect):
+            shutdown()
+        log.warning(f"The program will try to reconnect after {imap_auto_reconnect_wait}s...")
+        time.sleep(imap_auto_reconnect_wait)
         main()
     except KeyboardInterrupt:
         log.warning("The program has been stopped by user.")

@@ -11,6 +11,12 @@ Providing the free webhook service to the basic plan users in TradingView.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Aug 26, 2022]- >>>
+
+Removed TradingView `Send email` support temporarily. Please use `Send email-to-SMS` instead.
+
+###### <<< - [Aug 05, 2022]- >>>
+
 :warning: **Gmail** is not longer SUPPORTED :warning:
 
 **Google** has removed `Less secure apps` option. ([Reference Article](https://support.google.com/accounts/answer/6010255))
@@ -38,7 +44,7 @@ Please feel free to contact me if you have any suggestions.
 * No Pro/Pro+/Premium TradingView account requested.
   
 ## :triangular_flag_on_post: How it works ?
-Check the inbox frequently and transfer the TradingView alert email into the webhook message.
+Listen to the email inbox and transfer the TradingView alert email into the webhook message.
 
 
 ## :anchor: Requirements
@@ -53,20 +59,21 @@ To install **TradingView-Free-Webhook-Alerts**, check out the [Getting Started g
 
 ## :mailbox_with_mail: Notice
 * The program will read the incoming email and mark it as read.
-* It is suggested to create a new email account for the best performance.
-* The webhook message will not be sent immediately due to the latency of the email service provider. It will normally take about 2-5 seconds before the webhook message is sent.
+* It is suggested to create a new email account for the best performance and risk management.
+* The webhook message will not be sent immediately due to the latency of the email service provider & TradingView. It will normally take about **2-8 seconds** before the webhook message is sent. (**mainly depends on the network traffic between TradingView and your email service provider**) Please consider carefully before using the program for fast-moving markets.
 
 ## :right_anger_bubble: Combination
 You can combine the program with other services.
 For example,
 * You may use [TradingView-Webhook-Bot](https://github.com/fabston/TradingView-Webhook-Bot) to spread the webhook message.
-* You may send the webhook to [3commas](https://3commas.io/) for auto trading.
+* You may send a webhook to [3commas](https://3commas.io/) for auto trading.
+* You may send a webhook to [Discord](https://discord.com/) for sharing the signal.
 
 ## :star: TODO
-* Remove all potential risks that may be caused by the programme, for example, Gmail account was suspended because of high-frequency IMAP action (No reports show any Gmail account has been suspended due to this programme currently.).
+* Remove all potential risks that may be caused by the program, for example, Outlook account was locked because of high-frequency IMAP action.
 
 ## :bug: Known Issues
-* Inaccurate whole process time ([issue #3](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/3))
+* N/A
 
 ## :robot: Useful Links
 * Update TradingView `Email-To-SMS`: [LINK](https://www.tradingview.com/support/solutions/43000474398-how-to-change-the-email-to-sms-address-used-for-alert-notifications/)
@@ -79,4 +86,6 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 (Service refers to the **TradingView-Free-Webhook-Alerts**.)
 
 ## :coffee: Donation
+Love the program? Consider a donation to support our work.
+
 [!["Donation"](https://raw.githubusercontent.com/soranoo/Donation/main/resources/image/DonateBtn.png)](https://github.com/soranoo/Donation) <- click me~
