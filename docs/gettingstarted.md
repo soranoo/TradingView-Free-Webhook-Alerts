@@ -1,11 +1,11 @@
 # Getting Started with TradingView-Free-Webhook-Alerts
 
-## Installation
+## ⚙️ Installation
 - [Installing Python package](#installing-python-package)
 - [Setting up configuration](#setting-up-configuration)
 - [Setting up email configuration](#setting-up-email-configuration)
 
-## Usage
+## 🌻 Usage
 - [Setting up TradingView alert](#setting-up-tradingview-alert)
 - [Program Deployment](#program-deployment)
 
