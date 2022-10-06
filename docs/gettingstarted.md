@@ -4,6 +4,9 @@
 - [Installing Python package](#installing-python-package)
 - [Setting up configuration](#setting-up-configuration)
 - [Setting up email configuration](#setting-up-email-configuration)
+    - [Gmail](#setting-up-gmail-configuration)
+    - [Outlook/Hotmail](#setting-up-ms-email-configuration)
+    - [Other](#setting-up-other-email-configuration)
 
 ## 🌻 Usage
 - [Setting up TradingView alert](#setting-up-tradingview-alert)
@@ -24,20 +27,30 @@ You must finish the following steps before using the program.
 2. Rename the copied file to `config.toml`.
 3. Open `config.toml` with any text editor you like.
 4. Fill in `email_address` and `login_password` with your email and password.
-5. Fill in `imap_server_address` and `imap_server_port` with your email server and port. (For example, if you are using Hotmail, it will be `outlook.office365.com` and `993`.)
+5. Fill in `imap_server_address` and `imap_server_port` with your email server and port. (For example, if you are using Hotmail, it will be `outlook.office365.com` and `993`, Gmail will be `imap.gmail.com` and `993`.)
 6. Fill in `webhook_urls` with your webhook service URLs.
 7. Save the config file.
 
 You can adjust other settings on your own.
 
 <a name="setting-up-email-configuration"></a>
-## 3. Setting up email configuration
+## 3 Setting up email configuration
 
 You must finish the following steps before using the program.
 
->:warning: **Gmail** is not longer SUPPORTED :warning: 
+<a name="setting-up-gmail-configuration"></a>
+##### < Gmail >
+1. Enable `2-Step Verification` on your Gmail account.
+2. Create an **App Password** for the program to use. (Please read through this [article](https://support.google.com/accounts/answer/185833) for more information.) It is recommended to choose `Other (Custom name)` as the app in order to make it easier to identify in the future.
+3. Fill in `email_address` and `login_password` with your email and the app  password.
+4. Enable **IMAP** in your email account. (Please read through this [article](https://support.google.com/mail/answer/7126229) for more information.)
 
-If you are using Microsoft(Hotmail/Outlook) as your email service provider, you can skip step 1.
+<a name="setting-up-ms-email-configuration"></a>
+##### < OutLook/Hotmail >
+You are good to go!
+
+<a name="setting-up-other-email-configuration"></a>
+##### < Other >
 1. Enable IMAP in your email account.
 
 <a name="setting-up-tradingview-alert"></a>
@@ -53,4 +66,5 @@ If you are using Microsoft(Hotmail/Outlook) as your email service provider, you 
 <a name="program-deployment"></a>
 ## 5. Program Deployment
 
-1. Run `py main.py` in the command prompt.
+1. Open the command prompt and cd into the project directory.
+2. Run `py main.py` in the command prompt.

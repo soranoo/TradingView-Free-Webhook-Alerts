@@ -4,41 +4,18 @@ Project start on 01-02-2022
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![GitHub repo size](https://img.shields.io/github/repo-size/soranoo/TradingView-Free-Webhook-Alerts)
 ![GitHub top language](https://img.shields.io/github/languages/top/soranoo/TradingView-Free-Webhook-Alerts)
-&nbsp;&nbsp;&nbsp;[![Donation](https://img.shields.io/static/v1?label=Donation&message=❤️&style=social)](https://github.com/soranoo/Donation)
+&nbsp;[![Donation](https://img.shields.io/static/v1?label=Donation&message=❤️&style=social)](https://github.com/soranoo/Donation)
 
 Providing the free webhook service to the basic plan users in TradingView.
 
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Oct 06, 2022]- >>>
+Gmail is back! Please follow the [instruction](docs/gettingstarted.md#setting-up-gmail-configuration) if you want to switch to Gmail.
+
 ###### <<< - [Aug 26, 2022]- >>>
-
 Removed TradingView `Send email` support temporarily. Please use `Send email-to-SMS` instead.
-
-###### <<< - [Aug 05, 2022]- >>>
-
-:warning: **Gmail** is not longer SUPPORTED :warning:
-
-**Google** has removed `Less secure apps` option. ([Reference Article](https://support.google.com/accounts/answer/6010255))
-```
-To help keep your account secure, from May 30, 2022,
-​​Google no longer supports the use of third-party apps or
-devices which ask you to sign in to your Google Account
-using only your username and password.
-
-Important: This deadline does not apply to Google Workspace or
-Google Cloud Identity customers. The enforcement date for these
-customers will be announced on the Workspace blog at a later date.
-
-(BY Google)
-```
-(Special thanks: [`Pest202`](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/3))
-
-For those who are seeking an alternative to Gmail: [LINK](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/5#issuecomment-1205433464)
-
-:information_source: I will keep looking for other better IMAP services.
-Please feel free to contact me if you have any suggestions.
-
 
 ## :old_key: Features
 * No Pro/Pro+/Premium TradingView account requested.
