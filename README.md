@@ -26,8 +26,8 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 
 ## :anchor: Requirements
 * Python 3.6 or latest (*Developed in Python 3.8.1)
-* An IMAP available email account (eg.Hotmail, Outlook, etc.)
-  * Hotmail have be tested and works well
+* An IMAP available email account (eg.Hotmail, Outlook, Gmail, etc.)
+  * Hotmail&Gmail have be tested and works well.
 * A TradingView account
 
 ## :space_invader: Getting Started
