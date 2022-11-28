@@ -33,6 +33,8 @@ You must finish the following steps before using the program.
 
 You can adjust other settings on your own.
 
+🐳Tips: It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
+
 <a name="setting-up-email-configuration"></a>
 ## 3 Setting up email configuration
 
