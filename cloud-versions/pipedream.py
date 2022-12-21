@@ -141,6 +141,10 @@ def handler(pd: "pipedream"):
     if not show_welcome_msg:
         log.info("You are GOOD to go!\n\n")
         show_welcome_msg = True
-    # extract signal from previous steps
+        
+    # extract data from previous steps
     content = pd.steps["trigger"]["event"]["body"]["text"]
-    send_webhook(content)
+    from_email = pd.steps["trigger"]["event"]["headers"]["from"]["value"][0]["address"]
+    
+    if from_email in ["noreply@tradingview.com"]:
+        send_webhook(content)
