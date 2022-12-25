@@ -7,6 +7,7 @@ import pyfiglet
 import json
 import time
 import os
+import logging
 
 from rich import print as cprint
 from rich import traceback
@@ -15,7 +16,7 @@ from datetime import date, datetime, timezone
 
 from src import EmailListener
 from src import config, send_post_request, StoppableThread
-from src import log as tlog, DiscordEmbed
+from src import log , DiscordEmbed, create_logger
 from src import project_main_directory
 from src import event_subscribe, event_unsubscribe, event_post
 
@@ -38,12 +39,17 @@ webhook_urls = config.get("webhook_urls")
 discord_log = config.get("discord_log")
 discord_webhook_url = config.get("discord_webhook_url")
 
+log_with_colors = config.get("log_color")
+log_with_time_zone = config.get("log_time_zone")
+save_log = config.get("log_save")
+log_with_full_colors = config.get("log_full_color")
+
 config_version = config.get("config_version")
 
 tradingview_alert_email_address = ["noreply@tradingview.com"]
 
 # ---------------* Main *---------------
-program_version = "2.6.0"
+__version__ = "2.6.1"
 expect_config_version = "1.0.0"
 github_config_toml_url = "https://github.com/soranoo/TradingView-Free-Webhook-Alerts/blob/main/config.example.toml"
 
@@ -52,20 +58,13 @@ if not mode_traditional:
     from pyngrok import ngrok, conf as ngrok_conf
     from src import api_server_start
 
-# 5 = debug, info, ok, warning, error
-# 4 = info, ok, warning, error
-# 3 = ok, warning, error
-# 2 = warning, error
-# 1 = error only
-# 0 = OFF
-log_level = 5
-
-class Log:
+class DicordLogHandler(logging.Handler):
     EVENT_ID_DC_LOG = "dc-log"
     
-    def __init__(self) -> None:
+    def __init__(self):
         self.thread = StoppableThread(target=self._run_thread, args=())
         self.thread.start()
+        super().__init__()
     
     def _run_thread(self):
         event_subscribe(self.EVENT_ID_DC_LOG, self._send_to_webhook)
@@ -76,63 +75,28 @@ class Log:
                 break
     
     def _send_to_webhook(self, embed:DiscordEmbed):
-        if not discord_log:
-            return
         if not discord_webhook_url:
             log.warning("Discord webhook URL is not set.")
         embed.webhook_url = discord_webhook_url
         embed.send_to_webhook()
     
-    def debug(self, payload:str):
-        if (log_level < 5 or log_level < 0):
-            tlog.debug(payload)
-    
-    def info(self, payload):
-        if (log_level < 4 or log_level < 0):
-            return
-        embed = DiscordEmbed(title = "INFO", description = payload,
+    def emit(self, record):
+        if record.levelname == "INFO":
+            embed = DiscordEmbed(title = "INFO", description = record.msg,
                             color = DiscordEmbed.Color.BLUE)
-        event_post(self.EVENT_ID_DC_LOG, embed)
-        tlog.info(payload)
-
-    def ok(self, payload:str):
-        if (log_level < 3 or log_level < 0):
-            return
-        embed = DiscordEmbed(title = "OK", description = payload,
+            event_post(self.EVENT_ID_DC_LOG, embed)
+        elif record.levelname == "OK":
+            embed = DiscordEmbed(title = "OK", description = record.msg,
                             color = DiscordEmbed.Color.GREEN)
-        event_post(self.EVENT_ID_DC_LOG, embed)
-        tlog.ok(payload)
-
-    def warning(self, payload:str):
-        if (log_level < 2 or log_level < 0):
-            return
-        embed = DiscordEmbed(title = "WARNING", description = payload,
+            event_post(self.EVENT_ID_DC_LOG, embed)
+        elif record.levelname == "WARNING":
+            embed = DiscordEmbed(title = "WARNING", description = record.msg,
                             color = DiscordEmbed.Color.YELLOW)
-        event_post(self.EVENT_ID_DC_LOG, embed)
-        tlog.warning(payload)
-
-    def error(self, payload:str):
-        if (log_level < 1 or log_level < 0):
-            return
-        embed = DiscordEmbed(title = "ERROR", description = payload,
+            event_post(self.EVENT_ID_DC_LOG, embed)
+        elif record.levelname == "ERROR":
+            embed = DiscordEmbed(title = "ERROR", description = record.msg,
                             color = DiscordEmbed.Color.RED)
-        event_post(self.EVENT_ID_DC_LOG, embed)
-        tlog.error(payload)
-log = Log()
-        
-def shutdown(seconds:float = 10):
-    log.warning(f"The program will shut down after {seconds}s...")
-    time.sleep(seconds)
-    log.thread.stop()
-    exit()
-
-def send_webhook(payload:str or dict):
-    headers = {
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11"
-        }
-    for webhook_url in webhook_urls:
-        send_post_request(webhook_url, payload, headers)
+            event_post(self.EVENT_ID_DC_LOG, embed)
 
 class EmailSignalExtraction:
     last_email_uid = -1
@@ -323,8 +287,31 @@ class NgrokSignalRedirect:
         thread.start()
         thread.join()
 
+def shutdown(seconds:float = 10):
+    log.warning(f"The program will shut down after {seconds}s...")
+    time.sleep(seconds)
+    log.thread.stop()
+    exit()
+
+def send_webhook(payload:str or dict):
+    headers = {
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11"
+        }
+    for webhook_url in webhook_urls:
+        send_post_request(webhook_url, payload, headers)
+
 def main():
     log.debug(f"Traditional mode: {mode_traditional}")
+    create_logger(
+        save_log=save_log, color_print=log_with_colors,
+        print_log_msg_color=log_with_full_colors,
+        included_timezone=log_with_time_zone,
+        log_level=logging.DEBUG, rebuild_mode=True,
+        rebuild_logger=log
+    )
+    if discord_log:
+        log.addHandler(DicordLogHandler())
     if mode_traditional:
         EmailSignalExtraction().main()
     else:
@@ -334,7 +321,7 @@ if __name__ == "__main__":
     # welcome message
     cprint(pyfiglet.figlet_format("TradingView\nFree Webhook"))
     # startup check
-    print(f"Version: {program_version}  |  Config Version: {config_version}")
+    print(f"Version: {__version__}  |  Config Version: {config_version}")
     if(config_version != expect_config_version):
         log.error(f"The config file is outdated. Please update it to the latest version. (visit {github_config_toml_url})")
         shutdown()

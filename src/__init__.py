@@ -6,7 +6,7 @@ import os as _os
 
 from .network import send_post_request
 from .event import subscribe as event_subscribe, unsubscribe as event_unsubscribe, post_event as event_post
-from .logger import log, add_logging_level, Colorcode
+from .logger import logger as log, add_logging_level, Colorcode, create_logger
 from .http_status import http_status
 from .email_listener import EmailListener
 from .multi_task import StoppableThread
