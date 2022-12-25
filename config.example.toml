@@ -1,4 +1,9 @@
-# -----------* Email Service *-----------
+# -----------* Mode *-----------
+# if true the system will use the email signal extraction method
+# if false the system will use ngrok signal redirect method
+mode_traditional = false
+
+# -----------* Email Service (traditional) *-----------
 email_address = "YourEmail@hotmail.com / YourEmail@outlook.com"
 login_password = "YourPassword"
 imap_server_address = "outlook.office365.com"
@@ -10,10 +15,17 @@ imap_auto_reconnect = true
 # wait time (seconds) before reconnecting to IMAP server
 imap_auto_reconnect_wait = 10
 
+# ---------------* ngrok *---------------
+ngrok_auth_token = "YourAuthToken"
+
 # --------------* Webhook *--------------
 webhook_urls = [
     "Webhook URL",
     ]
+
+# ---------------* Dicord *---------------
+discord_log = false
+discord_webhook_url = ""
 
 # ----------------* Log *----------------
 # save log as a text file
@@ -27,3 +39,6 @@ log_time_zone = false
 
 # highlight the log with the same color with log label
 log_full_color = false
+
+# ----------------* don't touch *----------------
+config_version = "1.0.0"

@@ -1,16 +1,23 @@
 # TradingView-Free-Webhook-Alerts
 Project start on 01-02-2022
 
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![GitHub repo size](https://img.shields.io/github/repo-size/soranoo/TradingView-Free-Webhook-Alerts)
 ![GitHub top language](https://img.shields.io/github/languages/top/soranoo/TradingView-Free-Webhook-Alerts)
 &nbsp;[![Donation](https://img.shields.io/static/v1?label=Donation&message=❤️&style=social)](https://github.com/soranoo/Donation)
 
-Providing the free webhook service to the basic plan users in TradingView. Give me a ⭐ if you like it.
+Providing the free webhook service to the basic plan users in TradingView. 
+
+Give me a ⭐ if you like it.
 
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md)↞
 
 ## :newspaper: NEWS
+###### <<< - 🎄 [Dec 24, 2022] 🎁 - >>>
+[ngrok](https://ngrok.com/) version is now available! [[Read More](#👾-getting-started)]
+
+Config file has been updated. Don't forget to update your existing config file.
 ###### <<< - [Dec 05, 2022]- >>>
 [pipedream](https://pipedream.com/) version is now available! [[Read More](/docs/cloud-versions/pipedream/pipedream.md#shortcuts)]
 ###### <<< - [Oct 06, 2022]- >>>
@@ -21,37 +28,44 @@ Removed TradingView `Send email` support temporarily. Please use `Send email-to-
 
 ## 🗝️ Features
 * No Pro/Pro+/Premium TradingView account requested.
+* Supported [Dicord](https://discord.com/) monitoring.
   
 ## 🚩 How it works ?
 Listen to the email inbox and transfer the TradingView alert email into the webhook message.
 
 
 ## ⚓ Requirements
-* Python 3.6 or latest (*Developed in Python 3.8.1)
-* An IMAP available email account (eg.Hotmail, Outlook, Gmail, etc.)
-  * Hotmail&Gmail have be tested and works well.
+* Python 3.8.1 or latest (*Developed in Python 3.8.1)
 * A TradingView account
+* See the installation guide for more details.
 
 ## 👾 Getting Started
 - To install locally, check out the [Getting Started guide](docs/gettingstarted.md).
 - To install on the cloud, check out the [Cloud Versions](docs/cloud-versions/cloud-versions.md).
 
 ##### Comparison - Local vs Cloud
-| | Local | Cloud |
-| --- | --- | --- |
-| **Runtime** | When your computer is on | 24/7 |
-| **Cost** | Free | Free / Paid |
-| **Setup** | Easy? | Easy |
-| **Log** | Full Log | Depends on the service provider |
-| **Limitation** | None? | Depends on the service provider |
-| **Scalability** | ⭐Unlimited🌟 | Depends on the service provider |
-| **Setup Docs** | [DOCS](docs/gettingstarted.md) | [DOCS](docs/cloud-versions/cloud-versions.md) |
+| | Local (ngrok) | Local (traditional) | Cloud |
+| --- | --- | --- |--- |
+| **Runtime** | When your computer is on | When your computer is on | 24/7 |
+| **Cost** | Free | Free | Free / Paid |
+| **Setup** | 💀💀💀 | 💀💀 | 💀 |
+| **Limitation** | None? | None? | Depends on the service provider |
+| **Speed** | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
+| **Recommendation** | ⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
+| **Setup Docs** | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/gettingstarted.md#3-traditional-version) | [DOCS](docs/cloud-versions/cloud-versions.md) |
 
 
 ## 📬 Notice
+#### Local (traditional)
 * The program will read the incoming email and mark it as read.
 * It is suggested to create a new email account for the best performance and risk management.
 * The webhook message will not be sent immediately due to the latency of the email service provider & TradingView. It will normally take about **2-8 seconds** before the webhook message is sent. (**mainly depends on the network traffic between TradingView and your email service provider**) Please consider carefully before using the program for fast-moving markets.
+
+## 🦔 Potential Risk
+#### Local (traditional)
+* Email accounts may be locked because of high-frequency IMAP action.
+    - Reports have been received that some user was locked by Outlook.
 
 ## 🗯️ Combination
 You can combine the program with other services.
@@ -61,7 +75,7 @@ For example,
 * You may send a webhook to [Discord](https://discord.com/) for sharing the signal.
 
 ## ⭐ TODO
-* Remove all potential risks that may be caused by the program, for example, Outlook account was locked because of high-frequency IMAP action.
+* N/A
 
 ## 🐛 Known Issues
 * N/A
@@ -77,6 +91,6 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 (Service refers to the **TradingView-Free-Webhook-Alerts**.)
 
 ## ☕ Donation
-Love the program? Consider a donation to support our work.
+Love the program? Consider a donation to support my work.
 
 [!["Donation"](https://raw.githubusercontent.com/soranoo/Donation/main/resources/image/DonateBtn.png)](https://github.com/soranoo/Donation) <- click me~
