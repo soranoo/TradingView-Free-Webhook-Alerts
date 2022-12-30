@@ -39,7 +39,7 @@ def find_project_directory() -> str:
     THIS_DIRECTORY = project_dir = os.path.dirname(__file__)
     if __name__ == "__main__":
         return THIS_DIRECTORY
-    import_abs_path = __name__.split(".")[:-1]
+    import_abs_path = __name__.split(".")[:-1][::-1]
     for folder_name in import_abs_path:
         p_dir = project_dir.split(os.sep)
         if p_dir[-1] == folder_name:
@@ -148,7 +148,7 @@ def create_file_handler(log_folder_path:str = None, log_file_name:str = None,
         - (logging.FileHandler): The file handler.
     """
     log_folder_path = log_folder_path or os.path.join(find_project_directory(), "logs")
-    log_file_name = log_file_name or create_log_file_name()()
+    log_file_name = log_file_name or create_log_file_name()
     date_format = get_datetime_formant(included_timezone, use_local_version_time)
     file_formatter = logging.Formatter("%(asctime)s | %(levelname)-9s | %(message)s", datefmt=date_format)
     
@@ -308,4 +308,4 @@ if __name__ == "__main__":
     logger.error("Serious stuff, this is red for a reason")
     logger.critical("OH NO everything is on fire")
 else:
-    logger = create_logger(save_log=True)
+    logger = create_logger(save_log=False)
