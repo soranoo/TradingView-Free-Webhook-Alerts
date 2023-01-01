@@ -12,6 +12,7 @@ import logging
 from rich import print as cprint
 from rich import traceback
 from datetime import date, datetime, timezone
+from queue import Queue
 # from bs4 import BeautifulSoup
 
 from src import EmailListener
@@ -58,21 +59,27 @@ if not mode_traditional:
     from pyngrok import ngrok, conf as ngrok_conf
     from src import api_server_start
 
-class DicordLogHandler(logging.Handler):
-    EVENT_ID_DC_LOG = "dc-log"
+class DiscordLogHandler(logging.Handler):
+    """
+    A log handler that will send the log record to the Discord.
+    """
     
     def __init__(self):
-        self.thread = StoppableThread(target=self._run_thread, args=())
+        super().__init__(level=logging.INFO)
+        self.queue = Queue()
+        self.thread = StoppableThread(target=self._thread_main, args=(self.queue,))
         self.thread.start()
-        super().__init__()
     
-    def _run_thread(self):
-        event_subscribe(self.EVENT_ID_DC_LOG, self._send_to_webhook)
+    def _thread_main(self, queue):
         while True:
-            try:
-                time.sleep(1)
-            except KeyboardInterrupt:
-                break
+            # get the next log embed from the queue
+            embed = queue.get()
+
+            # send the log embed to Discord
+            self._send_to_webhook(embed)
+
+            # mark the log embed as processed
+            queue.task_done()
     
     def _send_to_webhook(self, embed:DiscordEmbed):
         if not discord_webhook_url:
@@ -81,22 +88,27 @@ class DicordLogHandler(logging.Handler):
         embed.send_to_webhook()
     
     def emit(self, record):
+        embed = None
+        
         if record.levelname == "INFO":
             embed = DiscordEmbed(title = "INFO", description = record.msg,
                             color = DiscordEmbed.Color.BLUE)
-            event_post(self.EVENT_ID_DC_LOG, embed)
         elif record.levelname == "OK":
             embed = DiscordEmbed(title = "OK", description = record.msg,
                             color = DiscordEmbed.Color.GREEN)
-            event_post(self.EVENT_ID_DC_LOG, embed)
         elif record.levelname == "WARNING":
             embed = DiscordEmbed(title = "WARNING", description = record.msg,
                             color = DiscordEmbed.Color.YELLOW)
-            event_post(self.EVENT_ID_DC_LOG, embed)
         elif record.levelname == "ERROR":
             embed = DiscordEmbed(title = "ERROR", description = record.msg,
                             color = DiscordEmbed.Color.RED)
-            event_post(self.EVENT_ID_DC_LOG, embed)
+        elif record.levelname == "CRITICAL":
+            embed = DiscordEmbed(title = "CRITICAL", description = record.msg,
+                            color = DiscordEmbed.Color.PURPLE)
+        
+        if not embed:
+            return
+        self.queue.put(embed)
 
 class EmailSignalExtraction:
     last_email_uid = -1
@@ -311,7 +323,7 @@ def main():
         rebuild_logger=log
     )
     if discord_log:
-        log.addHandler(DicordLogHandler())
+        log.addHandler(DiscordLogHandler())
     if mode_traditional:
         EmailSignalExtraction().main()
     else:
