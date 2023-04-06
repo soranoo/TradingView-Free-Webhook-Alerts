@@ -104,7 +104,7 @@ automation service.
 | `from` | `{{steps.trigger.event.headers.from.value[0].address}}` |
 | `subject` | `{{steps.trigger.event.headers.subject}}` |
 | `content` | `{{steps.trigger.event.body.text}}` |
-| `receive_datetime` | `{{{steps.trigger.context.ts}}` |
+| `receive_datetime` | `{{steps.trigger.context.ts}}` |
 
 (order is not important)
 
