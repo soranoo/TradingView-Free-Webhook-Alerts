@@ -1,3 +1,7 @@
+from .smart_import import try_import
+
+try_import("flask")
+
 from flask import Flask, request
 from . import log, event_post, StoppableThread
 import time
