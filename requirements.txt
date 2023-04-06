@@ -29,5 +29,5 @@ six==1.16.0
 soupsieve==2.3.1
 toml==0.10.2
 urllib3==1.26.8
-Werkzeug==2.2.2
+Werkzeug==2.2.3
 yarl==1.8.2
