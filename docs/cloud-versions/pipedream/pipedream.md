@@ -2,6 +2,9 @@
 
 [🔙 Back to cloud-versions.md](/docs/cloud-versions/cloud-versions.md)
 
+## ▶️ Tutorial Video
+- [Youtube](https://youtu.be/kTEcJhz0M98)
+
 <a name="shortcuts"></a>
 ## 🌻 Shortcuts
 - [Requirements](#requirements)
@@ -35,7 +38,7 @@
 
     > ⚠️ You may have to copy and paste the code by splitting it into small parts if you can't paste the whole code at once. Please make sure all indent are correct.
 
-10. Input your configuration. [[Click ME]((#configuration))]
+10. Input your configuration. [[Click ME](#configuration)]
 
 11. Click the "Test" button.
 ![img](imgs/setup_step_img_07.png)

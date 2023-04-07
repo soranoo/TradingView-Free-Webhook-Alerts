@@ -28,6 +28,9 @@ To install the Python package dependencies you have to type `pip install -r requ
 <a name="ngrok-version"></a>
 ## 2. ngrok Version
 
+### ▶️ Tutorial Video
+- [Youtube](https://youtu.be/_ZN_rbH1OuM)
+
 <a name="ngrok-version-extra-requirement"></a>
 ### 2.1 Extra Requirement
 * A [ngrok](https://ngrok.com/) account.

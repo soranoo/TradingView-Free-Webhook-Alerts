@@ -11,7 +11,7 @@ Providing the free webhook service to the basic plan users in TradingView.
 
 Give me a ⭐ if you like it.
 
-### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md)↞
+### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
 ###### <<< - 🎄 [Dec 24, 2022] 🎁 - >>>
@@ -53,6 +53,7 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 | **Speed** | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
 | **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
 | **Recommendation** | ⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
+| **Tutorial Video** | [Youtube](https://youtu.be/_ZN_rbH1OuM) | 🚫 | [Youtube](https://youtu.be/kTEcJhz0M98) |
 | **Setup Docs** | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/gettingstarted.md#3-traditional-version) | [DOCS](docs/cloud-versions/cloud-versions.md) |
 
 
