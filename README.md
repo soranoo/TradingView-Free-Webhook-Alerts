@@ -14,17 +14,14 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Apr 07, 2023]- >>>
+Added [tutorial videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo)
+
 ###### <<< - 🎄 [Dec 24, 2022] 🎁 - >>>
 [ngrok](https://ngrok.com/) version is now available! [[Read More](#👾-getting-started)]
 
 Config file has been updated. Don't forget to update your existing config file.
-###### <<< - [Dec 05, 2022]- >>>
-[pipedream](https://pipedream.com/) version is now available! [[Read More](/docs/cloud-versions/pipedream/pipedream.md#shortcuts)]
-###### <<< - [Oct 06, 2022]- >>>
-Gmail is back! Please follow the [instruction](docs/gettingstarted.md#setting-up-gmail-configuration) if you want to switch to Gmail.
 
-###### <<< - [Aug 26, 2022]- >>>
-Removed TradingView `Send email` support temporarily. Please use `Send email-to-SMS` instead.
 
 ## 🗝️ Features
 * No Pro/Pro+/Premium TradingView account requested.
@@ -51,8 +48,9 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 | **Setup** | 💀💀💀 | 💀💀 | 💀 |
 | **Limitation** | None? | None? | Depends on the service provider |
 | **Speed** | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Stability** | ⭐⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
 | **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
-| **Recommendation** | ⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
+| **Recommendation** | ⭐⭐⭐⭐ | 🚫 | ⭐⭐⭐⭐⭐ |
 | **Tutorial Video** | [Youtube](https://youtu.be/_ZN_rbH1OuM) | 🚫 | [Youtube](https://youtu.be/kTEcJhz0M98) |
 | **Setup Docs** | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/gettingstarted.md#3-traditional-version) | [DOCS](docs/cloud-versions/cloud-versions.md) |
 
