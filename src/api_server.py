@@ -2,6 +2,7 @@ from .smart_import import try_import
 
 try_import("flask")
 
+from waitress import serve
 from flask import Flask, request
 from . import log, event_post, StoppableThread
 import time
@@ -46,13 +47,22 @@ def start(event_id_port:str = None, event_id_rev:str = None):
         - `event_id_rev`: Event ID to post the received data
     """
     def _try_start_with(p:int):
-        app.run(port=p)
+        # start server
+        serve(app, port=p, ident="API Server") # production server
+        # app.run(port=p) # development server
+        
     global api_key
     global event_id_receive
     log.info("Start port test...")
     port = START_PORT
     while True:
         log.info(f"Testing port {port}")
+        
+        # disable waitress logging to avoid double logging
+        # ref: https://stackoverflow.com/a/73718530
+        noop = logging.NullHandler()
+        logging.getLogger().addHandler(noop)
+        
         thread = StoppableThread(target=_try_start_with, args=(port,))
         thread.start()
         api_key = generate_api_key(32)
