@@ -24,8 +24,6 @@ discord_webhook_url = r""
 # 0 = OFF
 log_level = 4
 
-
-
 # =====================================
 # CODE
 # =====================================
@@ -128,12 +126,12 @@ def send_webhook(payload:str):
             log.warning(f"Send webhook failed.\nReason: invalid URL <{webhook_url}>\nContent: {payload}")
             continue
         currentTime = datetime.now()
-        response = post_request(webhook_url, payload)
+        res = post_request(webhook_url, payload)
         time_used = (datetime.now()-currentTime).total_seconds() * 1000
-        if (response.status_code == 200):
+        if (res.status_code == 200):
             log.ok(f"Webhook Sent!\n\nProcess Time: {time_used}ms\nDomain: {domain}\nFull URL: {webhook_url}\nContent: {payload}")
         else:
-            log.error(f"Send webhook failed.\nReason: {response.text}\nStatus: {response.status_code}\n\nDomain: {domain}\nFull URL: {webhook_url}\nContent: {payload}")
+            log.error(f"Send webhook failed.\nReason: {res.text}\nStatus: {res.status_code}\n\nDomain: {domain}\nFull URL: {webhook_url}\nContent: {payload}")
 
 
 def handler(pd: "pipedream"):
