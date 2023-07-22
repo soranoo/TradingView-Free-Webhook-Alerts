@@ -12,7 +12,7 @@ from .email_listener import EmailListener
 from .multi_task import StoppableThread
 from .api_server import start as api_server_start
 from .discord_utilities import Embed as DiscordEmbed
-import PlanToRun
+from .PlanToRun import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
 
 class log_levels:
     """

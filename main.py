@@ -11,7 +11,7 @@ import logging
 
 from rich import print as cprint
 from rich import traceback
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from queue import Queue
 # from bs4 import BeautifulSoup
 
@@ -20,7 +20,7 @@ from src import config, send_post_request, StoppableThread
 from src import log , DiscordEmbed, create_logger
 from src import project_main_directory
 from src import event_subscribe, event_unsubscribe, event_post
-from src import PlanToRun
+from src import plan_to_run_run_at
 
 traceback.install()
 
@@ -53,7 +53,7 @@ tradingview_alert_email_address = ["noreply@tradingview.com"]
 retry_after_header = "Retry-After"
 
 # ---------------* Main *---------------
-__version__ = "2.6.2"
+__version__ = "2.6.3"
 expect_config_version = "1.0.0"
 github_config_toml_url = "https://github.com/soranoo/TradingView-Free-Webhook-Alerts/blob/main/config.example.toml"
 
@@ -318,7 +318,7 @@ def send_webhook(payload:str or dict):
         elif retry_after := res.headers.get("Retry-After"):
             if res.status_code == 429:
                 log.warning(f"Sent webhook to {webhook_url} failed, response code: {res.status_code}, Content: {payload}, Retry-After header({retry_after_header}) found, auto retry after {retry_after}s...")
-                PlanToRun.run_at(time.time() + float(retry_after), send_webhook, payload)
+                plan_to_run_run_at(time.time() + float(retry_after), send_webhook, payload)
                 continue
             log.error(f"Sent webhook to {webhook_url} failed, response code: {res.status_code}, Content: {payload}.")
 
