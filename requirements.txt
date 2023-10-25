@@ -31,5 +31,5 @@ soupsieve==2.3.1
 toml==0.10.2
 urllib3==1.26.8
 waitress==2.1.2
-Werkzeug==2.3.3
+Werkzeug==3.0.1
 yarl==1.8.2
