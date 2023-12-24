@@ -1,0 +1,13 @@
+version: '3'
+services:
+  TradingView-Free-Webhook-Alerts:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: tradingview-free-webhook-alerts
+    container_name: tradingview-free-webhook-alerts
+    command: ["python3", "main.py"]
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app

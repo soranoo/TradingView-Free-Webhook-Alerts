@@ -14,11 +14,11 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - 🎄 [Dec 24, 2023] 🎁 - >>>
+Added Docker Version ([Read Docs](docs/gettingstarted.md#2-ngrok-version))
+
 ###### <<< - [Apr 07, 2023]- >>>
 Added [tutorial videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo)
-
-###### <<< - 🎄 [Dec 24, 2022] 🎁 - >>>
-[ngrok](https://ngrok.com/) version is now available! [[Read More](#👾-getting-started)]
 
 Config file has been updated. Don't forget to update your existing config file.
 
@@ -32,28 +32,30 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 
 
 ## ⚓ Requirements
-* Python 3.8.1 or latest (*Developed in Python 3.8.1)
+* Python 3.8.1 or latest (*Developed in Python 3.8.1 & 3.10.11 & 3.11.6)
 * A TradingView account
 * See the installation guide for more details.
 
 ## 👾 Getting Started
-- To install locally, check out the [Getting Started guide](docs/gettingstarted.md).
+- To install locally or on Docker, check out the [Getting Started guide](docs/gettingstarted.md).
 - To install on the cloud, check out the [Cloud Versions](docs/cloud-versions/cloud-versions.md).
 
-##### Comparison - Local vs Cloud
-| | Local (ngrok) | Local (traditional) | Cloud |
-| --- | --- | --- |--- |
-| **Runtime** | When your computer is on | When your computer is on | 24/7 |
-| **Cost** | Free | Free | Free / Paid |
-| **Setup** | 💀💀💀 | 💀💀 | 💀 |
-| **Limitation** | None? | None? | Depends on the service provider |
-| **Speed** | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Stability** | ⭐⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
-| **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
-| **Recommendation** | ⭐⭐⭐⭐ | 🚫 | ⭐⭐⭐⭐⭐ |
-| **Tutorial Video** | [Youtube](https://youtu.be/_ZN_rbH1OuM) | 🚫 | [Youtube](https://youtu.be/kTEcJhz0M98) |
-| **Setup Docs** | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/gettingstarted.md#3-traditional-version) | [DOCS](docs/cloud-versions/cloud-versions.md) |
+##### Comparison - Local vs Docker vs Cloud
+| | Local (traditional) | Local (ngrok) | Docker (ngrok) | Cloud |
+| --- | --- | --- |--- | --- |
+| **Uptime** | Depends on running the environment | Depends on running the environment | Depends on running the environment | 24/7 |
+| **Cost** | Free | Free | Free | Free / Paid |
+| **Setup** | 💀💀 | 💀💀💀 | 💀💀💀 | 💀 |
+| **Limitation** | None? | None? | None? | Depends on the service provider |
+| **Speed** | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Stability** | ⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ |
+| **Portability** | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | N/A |
+| **Recommendation** | 🚫 | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Tutorial Video** | 🚫 | [Youtube](https://youtu.be/_ZN_rbH1OuM) | 🚫 | [Youtube](https://youtu.be/kTEcJhz0M98) |
+| **Setup Docs** | [DOCS](docs/gettingstarted.md#3-traditional-version) | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/cloud-versions/cloud-versions.md) |
 
+> The ngrok Docker version setup is similar to the ngrok local version so I am not going to make a tutorial video for it.
 
 ## 📬 Notice
 #### Local (traditional)

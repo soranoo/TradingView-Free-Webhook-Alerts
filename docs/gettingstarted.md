@@ -2,11 +2,13 @@
 
 ## ⚙️ Installation
 - [Installing Python package](#installing-python-package)
-- [ngrok Version](#ngrok-version) (recommended)
+- [ngrok Version (Local / Docker)](#ngrok-version) (recommended)
     - [Extra Requirement](#ngrok-version-extra-requirement)
     - [Setup](ngrok-version-setup)
         - [Configuration](#ngrok-version-configuration)
         - [Find API KEY and ngrok URL](#ngrok-version-find-api-key-and-ngrok-url)
+            - [Branch - Local Version](#branch---local-version)
+            - [Branch - Docker Version](#branch---docker-version)
         - [Setting up pipedream](#ngrok-version-setting-up-pipedream)
 - [Traditional Version](#traditional-version)
     - [Extra Requirement](#traditional-version-extra-requirement)
@@ -26,7 +28,7 @@
 To install the Python package dependencies you have to type `pip install -r requirements.txt` into the command prompt which already cd into the project directory.
 
 <a name="ngrok-version"></a>
-## 2. ngrok Version
+## 2. ngrok Version (Local / Docker)
 
 ### ▶️ Tutorial Video
 - [Youtube](https://youtu.be/_ZN_rbH1OuM)
@@ -35,6 +37,7 @@ To install the Python package dependencies you have to type `pip install -r requ
 ### 2.1 Extra Requirement
 * A [ngrok](https://ngrok.com/) account.
 * A [pipedream](https://pipedream.com/) account or any other workflow 
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) (optional) - If you want to use the Docker version.
 automation service.
 
 <a name="ngrok-version-setup"></a>
@@ -50,14 +53,31 @@ automation service.
 ![img](imgs/ngrok_version_setup_01.png)
 6. Fill in `webhook_urls` with your webhook service URLs.
 
-> 🐳Tips: It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
+> [!NOTE]\
+> It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
 7. Save the config file.
 
 <a name="ngrok-version-find-api-key-and-ngrok-url"></a>
 #### Find API KEY and ngrok URL
+
+##### Branch - Local Version
 8. Open the command prompt and cd into the project directory.
 9. Type `pip install -r requirements.txt` to install the Python package dependencies.
 10. Type `python main.py` to start the program.
+
+##### Branch - Docker Version
+8. Open the command prompt and cd into the project directory.
+9. Type `docker-compose build` to build the docker image.
+10. Type `docker-compose up` to start the program. (You can close the command prompt after finishing next step.)
+
+> [!NOTE]\
+> To view the program logs, simply click the name of the `tradingview-free-webhook-alerts` container. (You have to do this to get the API KEY and ngrok URL.)
+
+> [!NOTE]\
+> You have to run the `docker-compose build & docker-compose up` command if you updated the `config.toml`.
+
+##### Both
+
 11. Copy the "API KEY" and "ngrok URL" from the command prompt and paste them somewhere for later use.
 ![img](imgs/ngrok_version_setup_02.png)
 12. Keep the program running in the background.
@@ -142,7 +162,8 @@ You must finish the following steps before using the program.
 
 You can adjust other settings on your own.
 
-> 🐳Tips: It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
+> [!NOTE]\
+> It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
 
 <a name="setting-up-email-configuration"></a>
 ### 3.3 Setting up email configuration
@@ -177,6 +198,14 @@ You are good to go!
 <a name="program-deployment"></a>
 ## 5. Program Deployment
 
+#### Local (ngrok / traditional)
 1. Open the command prompt and cd into the project directory.
 2. Run `python main.py` in the command prompt.
-> ⚠️ If you are using ngrok version, you will get a new API KEY and ngrok URL every time you start the program. You need to update the webhook service with the new API KEY and ngrok URL.
+
+#### Docker (ngrok)
+1. Open the Docker Desktop
+2. Click to the "Containers" tab.
+3. Click the "Run" button. (Inside the "Actions" column)
+
+> [!WARNING]\
+> If you are using ngrok version (Local / Docker), you will get a new API KEY and ngrok URL every time you start the program. You need to update the webhook service with the new API KEY and ngrok URL.

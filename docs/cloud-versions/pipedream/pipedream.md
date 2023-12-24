@@ -36,7 +36,8 @@
 ![img](imgs/setup_step_img_06.png)
 9. Copy the code [[Click ME](/cloud-versions/pipedream.py)] and paste it into pipedream's code editor.
 
-    > ⚠️ You may have to copy and paste the code by splitting it into small parts if you can't paste the whole code at once. Please make sure all indent are correct.
+    > [!WARNING]\
+    > You may have to copy and paste the code by splitting it into small parts if you can't paste the whole code at once. Please make sure all indent are correct.
 
 10. Input your configuration. [[Click ME](#configuration)]
 
@@ -67,7 +68,8 @@ webhook_urls = [
     # ...
 ]
 ```
-> 🐳Tips: It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
+> [!NOTE]\
+> It is a good idea to test your signal or the program using a webhook test service such as [webhook.site](https://webhook.site/) instead of using your production webhook.
 2. `discord_webhook_url` - (Optional) Discord webhook URL. Mainly for logging purposes. Leave it blank if you don't want to use it.
 
 <a name="special-thanks"></a>
