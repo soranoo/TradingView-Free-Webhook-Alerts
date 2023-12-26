@@ -70,6 +70,9 @@ automation service.
 9. Type `docker-compose build` to build the docker image.
 10. Type `docker-compose up` to start the program. (You can close the command prompt after finishing next step.)
 
+> [!WARNING]\
+> Your `config.toml` will be copied directly into the docker image. Meaning that you WILL expose your secrets to the public if you push/share the docker image to the public/others. (You should not do that.)
+
 > [!NOTE]\
 > To view the program logs, simply click the name of the `tradingview-free-webhook-alerts` container. (You have to do this to get the API KEY and ngrok URL.)
 
