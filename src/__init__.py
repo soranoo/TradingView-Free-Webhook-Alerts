@@ -4,7 +4,7 @@ try_import("toml")
 import toml as _toml
 import os as _os
 
-from .network import send_post_request
+from .network import send_post_request, is_url_valid
 from .event import subscribe as event_subscribe, unsubscribe as event_unsubscribe, post_event as event_post
 from .logger import logger as log, add_logging_level, Colorcode, create_logger
 from .http_status import http_status

@@ -16,7 +16,7 @@ from queue import Queue
 # from bs4 import BeautifulSoup
 
 from src import EmailListener
-from src import config, send_post_request, StoppableThread
+from src import config, send_post_request, StoppableThread, is_url_valid
 from src import log , DiscordEmbed, create_logger
 from src import project_main_directory
 from src import event_subscribe, event_unsubscribe, event_post
@@ -37,6 +37,7 @@ imap_auto_reconnect_wait = config.get("imap_auto_reconnect_wait")
 ngrok_auth_token = config.get("ngrok_auth_token")
 
 webhook_urls = config.get("webhook_urls")
+proxy_url = config.get("proxy_url")
 
 discord_log = config.get("discord_log")
 discord_webhook_url = config.get("discord_webhook_url")
@@ -54,8 +55,20 @@ retry_after_header = "Retry-After"
 
 # ---------------* Main *---------------
 __version__ = "2.6.3"
-expect_config_version = "1.0.0"
+expect_config_version = "1.0.1"
 github_config_toml_url = "https://github.com/soranoo/TradingView-Free-Webhook-Alerts/blob/main/config.example.toml"
+
+proxies = {
+    "http": proxy_url,
+    "https": proxy_url
+} if proxy_url else None
+
+if proxies != None:
+    if is_valid_url := is_url_valid(proxy_url):
+        log.info(f"Using proxy: {proxy_url}")
+    else:
+        log.error(f"Invalid proxy URL: {proxy_url}")
+        exit()
 
 if not mode_traditional:
     try_import("pyngrok")
@@ -312,7 +325,7 @@ def send_webhook(payload:str or dict):
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11"
         }
     for webhook_url in webhook_urls:
-        res = send_post_request(webhook_url, payload, headers)
+        res = send_post_request(webhook_url, payload, headers, proxies=proxies)
         if res.status_code in [200, 201, 202, 203, 204]:
             log.ok(f"Sent webhook to {webhook_url} successfully, response code: {res.status_code}")
         elif retry_after := res.headers.get("Retry-After"):

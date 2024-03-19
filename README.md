@@ -14,6 +14,9 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Mar 19, 2024] - >>>
+Added proxy support for all versions. Check out the config file for more details.
+
 ###### <<< - 🎄 [Dec 24, 2023] 🎁 - >>>
 Added Docker Version ([Read Docs](docs/gettingstarted.md#2-ngrok-version))
 
@@ -74,6 +77,11 @@ For example,
 * You may use [TradingView-Webhook-Bot](https://github.com/fabston/TradingView-Webhook-Bot) to spread the webhook message.
 * You may send a webhook to [3commas](https://3commas.io/) for auto trading.
 * You may send a webhook to [Discord](https://discord.com/) for sharing the signal.
+
+## :question: FAQ
+* **Q: Some exchnage banned my IP. What should I do?**
+    - A: You may use a proxy to bypass the IP ban. You should see there is a proxy option in the config file. Related issue: [#69](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/69)
+
 
 ## ⭐ TODO
 * N/A

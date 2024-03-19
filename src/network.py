@@ -40,7 +40,7 @@ def extract_url_domain(url:str) -> bool or str:
     """
     return m[1] if (m := re.search(URL_REGEX, url)) else None
 
-def send_post_request(url:str, payload:str or dict, headers:dict = None) -> requests.models.Response:
+def send_post_request(url:str, payload:str or dict, headers:dict = None, proxies:dict = None) -> requests.models.Response:
     """
     ### Description ###
     Send HTTP POST request
@@ -48,6 +48,8 @@ def send_post_request(url:str, payload:str or dict, headers:dict = None) -> requ
     ### Parameters ###
         - `url` (str): URL
         - `payload` (str or dict): Payload
+        - `headers` (dict): Headers
+        - `proxies` (dict): Proxies
 
     ### Returns ###
         - (requests.models.Response): Response
@@ -71,4 +73,5 @@ def send_post_request(url:str, payload:str or dict, headers:dict = None) -> requ
         url,
         data=payload,
         headers=POST_REQUEST_HEADERS if headers is None else headers,
+        proxies=proxies
     )

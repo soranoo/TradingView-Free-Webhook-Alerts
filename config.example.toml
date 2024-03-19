@@ -23,6 +23,8 @@ webhook_urls = [
     "Webhook URL",
     ]
 
+proxy_url = "" # eg. http://username:password@0.0.0.0:8080
+
 # ---------------* Dicord *---------------
 discord_log = false
 discord_webhook_url = ""
@@ -41,4 +43,4 @@ log_time_zone = false
 log_full_color = false
 
 # ----------------* don't touch *----------------
-config_version = "1.0.0"
+config_version = "1.0.1"

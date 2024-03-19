@@ -14,6 +14,8 @@ webhook_urls = [
   #r"https://yourwebhook3.com",
 ]
 
+proxy_url = "" # eg. http://username:password@0.0.0.0:8080
+
 # vv for logging (fill in the webhook URL if you need)
 discord_webhook_url = r""
 
@@ -29,6 +31,11 @@ log_level = 4
 # =====================================
 
 show_welcome_msg = False
+
+proxies = {
+    "http": proxy_url,
+    "https": proxy_url
+} if proxy_url else None
 
 url_regex = "https?://([A-Za-z_0-9.-]+).*"
 
@@ -101,7 +108,7 @@ def post_request(webhook_url:str, payload:str or json, auto_json_dumps:bool = Tr
     session.mount('http://', adapter)
     session.mount('https://', adapter)
     # send request
-    response = session.post(webhook_url, data=data, headers=headers)
+    response = session.post(webhook_url, data=data, headers=headers, proxies=proxies)
     return response
 
 def send_msg_to_dc(message, embeds=None):
