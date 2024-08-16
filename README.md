@@ -14,6 +14,9 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Aug 16, 2024] - >>>
+Added Google App Script as a cloud provider to the cloud version, Thanks [@Priyanshu-raj95](https://github.com/Priyanshu-raj95)! ([Read Docs](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/discussions/81))
+
 ###### <<< - [Mar 19, 2024] - >>>
 Added proxy support for all versions. Check out the config file for more details.
 
