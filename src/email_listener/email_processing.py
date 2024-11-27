@@ -40,17 +40,15 @@ def write_txt_file(email_listener, msg_dict):
     file_list = []
     # For each key, create a file and ensure it doesn't exist
     for key in msg_dict.keys():
-        file_path = os.path.join(email_listener.attachment_dir, "{}.txt".format(key))
+        file_path = os.path.join(email_listener.attachment_dir, f"{key}.txt")
         if os.path.exists(file_path):
             print("File has already been created.")
             continue
 
-        # Open the file
-        file = open(file_path, "w+")
-        # Conver the message data to a string, and write it to the file
-        msg_string = __msg_to_str(msg_dict[key])
-        file.write(msg_string)
-        file.close()
+        with open(file_path, "w+") as file:
+            # Conver the message data to a string, and write it to the file
+            msg_string = __msg_to_str(msg_dict[key])
+            file.write(msg_string)
         # Add the file name to the return list
         file_list.append(file_path)
 
@@ -70,22 +68,22 @@ def __msg_to_str(msg):
 
     # String to be returned
     msg_string = ""
-    
+
     # Append the subject
     subject = msg.get('Subject')
-    msg_string += "Subject\n\n{}\n\n\n".format(subject)
+    msg_string += f"Subject\n\n{subject}\n\n\n"
 
     # Append the plain text
     plain_text = msg.get('Plain_Text')
     if plain_text is not None:
-        msg_string += "Plain_Text\n\n{}\n\n\n".format(plain_text)
+        msg_string += f"Plain_Text\n\n{plain_text}\n\n\n"
 
     # Append the plain html and html
     plain_html = msg.get('Plain_HTML')
     html = msg.get('HTML')
     if plain_html is not None:
-        msg_string += "Plain_HTML\n\n{}\n\n\n".format(plain_html)
-        msg_string += "HTML\n\n{}\n\n\n".format(html)
+        msg_string += f"Plain_HTML\n\n{plain_html}\n\n\n"
+        msg_string += f"HTML\n\n{html}\n\n\n"
 
     # Append the attachment list
     attachments = msg.get('attachments')
@@ -94,7 +92,7 @@ def __msg_to_str(msg):
 
     msg_string += "attachments\n\n"
     for file in attachments:
-        msg_string += "{}\n".format(file)
+        msg_string += f"{file}\n"
 
     return msg_string
 
@@ -154,7 +152,7 @@ def write_json_file(email_listener, msg_dict):
     file_list = []
     # For each key, create a file and ensure it doesn't exist
     for key in msg_dict.keys():
-        file_path = os.path.join(email_listener.attachment_dir, "{}.json".format(key))
+        file_path = os.path.join(email_listener.attachment_dir, f"{key}.json")
         if os.path.exists(file_path):
             print("File has already been created.")
             continue
@@ -162,11 +160,9 @@ def write_json_file(email_listener, msg_dict):
         # Convert the returned dict to json
         json_obj = json.dumps(msg_dict[key], indent = 4)
 
-        # Open the file
-        file = open(file_path, "w+")
-        # Write the json object to the file
-        file.write(json_obj)
-        file.close()
+        with open(file_path, "w+") as file:
+            # Write the json object to the file
+            file.write(json_obj)
         # Add the file name to the return list
         file_list.append(file_path)
 
