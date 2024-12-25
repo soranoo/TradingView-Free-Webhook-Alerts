@@ -89,12 +89,10 @@ class EmailSignalExtraction:
                 email_content = json.loads(email_content)
             email_content = json.dumps(email_content)
             log.info(f"Sending webhook alert<{email_subject}>, content: {email_content}")
-            try:
-                broadcast(email_content)
-                log.info(f"The whole process taken {round((datetime.now(timezone.utc) - email_date).total_seconds(), 3)}s.")
-                self.add_email_to_history(email_uid)
-            except Exception as err:
-                log.error(f"Sent webhook failed, reason: {err}")
+            
+            broadcast(email_content)
+            log.info(f"The whole process taken {round((datetime.now(timezone.utc) - email_date).total_seconds(), 3)}s.")
+            self.add_email_to_history(email_uid)
     
     def start(self):
         if self.imap_auto_reconnect_wait <= 0:

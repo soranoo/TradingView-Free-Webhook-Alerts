@@ -38,11 +38,8 @@ class NgrokSignalRedirect:
             return         
 
         log.info(f"Sending webhook alert<{email_subject}>, content: {email_content}")
-        try:
-            broadcast(email_content)
-            log.info(f"The whole process taken {self.calculate_seconds_to_now(receive_datetime)}s.")
-        except Exception as err:
-            log.error(f"Sent webhook failed, reason: {err}")
+        broadcast(email_content)
+        log.info(f"The whole process taken {self.calculate_seconds_to_now(receive_datetime)}s.")
         
     def setup_ngrok(self, port: int):
         try_import("pyngrok")
