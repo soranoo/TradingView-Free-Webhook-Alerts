@@ -74,17 +74,14 @@ def send_msg_to_tg(payload:str | dict) -> None:
         raise ValueError("Message exceeds Telegram's 4096 character limit")
 
     payload = json.dumps({"chat_id": f"{tg_chat_id}", "text": f"{payload}"})
-    try:
-        response = send_post_request(
-            f"https://api.telegram.org/bot{tg_bot_token}/sendMessage",
-            payload,
-            POST_REQUEST_HEADERS,
-            proxies=proxies
-        )
-        if response.status_code >= 400:
-            log.error(f"Telegram API error: {response.text}")
-    except Exception as e:
-        log.error(f"Failed to send Telegram message: {str(e)}")
+    response = send_post_request(
+        f"https://api.telegram.org/bot{tg_bot_token}/sendMessage",
+        payload,
+        POST_REQUEST_HEADERS,
+        proxies=proxies
+    )
+    if response.status_code >= 400:
+        log.error(f"Telegram API error: {response.text}")
 
 def broadcast(payload:str | dict) -> None:
     """
