@@ -56,19 +56,35 @@ def send_webhook(payload:str | dict):
                 continue
             log.error(f"Sent webhook to {webhook_url} failed, response code: {res.status_code}, Content: {payload}.")
 
-def send_msg_to_tg(payload:str | dict):
+def send_msg_to_tg(payload:str | dict) -> None:
     """
     ### Description ###
     Send a message to the specified Telegram chat.
     
     ### Parameters ###
         - `payload` (str | dict): The content of the message to send
+
+    ### Raises ###
+        - ValueError: If message exceeds Telegram's length limit
     """
     if isinstance(payload, dict):
         payload = json.dumps(payload)
         
+    if len(payload) > 4096:
+        raise ValueError("Message exceeds Telegram's 4096 character limit")
+
     payload = json.dumps({"chat_id": f"{tg_chat_id}", "text": f"{payload}"})
-    send_post_request(f"https://api.telegram.org/bot{tg_bot_token}/sendMessage", payload, POST_REQUEST_HEADERS, proxies=proxies)
+    try:
+        response = send_post_request(
+            f"https://api.telegram.org/bot{tg_bot_token}/sendMessage",
+            payload,
+            POST_REQUEST_HEADERS,
+            proxies=proxies
+        )
+        if response.status_code >= 400:
+            log.error(f"Telegram API error: {response.text}")
+    except Exception as e:
+        log.error(f"Failed to send Telegram message: {str(e)}")
 
 def broadcast(payload:str | dict):
     """
