@@ -3,7 +3,8 @@ import json
 import os
 import time
 from datetime import datetime, timezone
-from src import EmailListener, log, send_webhook, shutdown, project_main_directory, TRADINGVIEW_ALERT_EMAIL_ADDRESS
+from src import EmailListener, log, shutdown, project_main_directory, TRADINGVIEW_ALERT_EMAIL_ADDRESS
+from src.broadcast import broadcast
 
 class EmailSignalExtraction:
     # env
@@ -89,7 +90,7 @@ class EmailSignalExtraction:
             email_content = json.dumps(email_content)
             log.info(f"Sending webhook alert<{email_subject}>, content: {email_content}")
             try:
-                send_webhook(email_content)
+                broadcast(email_content)
                 log.info(f"The whole process taken {round((datetime.now(timezone.utc) - email_date).total_seconds(), 3)}s.")
                 self.add_email_to_history(email_uid)
             except Exception as err:

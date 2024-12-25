@@ -1,7 +1,6 @@
 import time as _time
 from .smart_import import try_import
 
-try_import("toml")
 import toml as _toml
 import os as _os
 
@@ -14,7 +13,7 @@ from .multi_task import StoppableThread
 from .api_server import start as api_server_start
 from .discord_utilities import Embed as DiscordEmbed
 from .PlanToRun import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
-from .constants import TRADINGVIEW_ALERT_EMAIL_ADDRESS, RETRY_AFTER_HEADER
+from .constants import TRADINGVIEW_ALERT_EMAIL_ADDRESS, RETRY_AFTER_HEADER, POST_REQUEST_HEADERS
 
 class log_levels:
     """
@@ -56,47 +55,3 @@ def shutdown(seconds:float = 10):
     _time.sleep(seconds)
     log.thread.stop()
     exit()
-
-
-_webhook_urls = config.get("webhook_urls")
-_proxy_url = config.get("proxy_url")
-_proxies = {
-    "http": _proxy_url,
-    "https": _proxy_url
-} if _proxy_url else None
-
-# Validate proxy URL
-if _proxies != None:
-    if is_valid_url := is_url_valid(_proxy_url):
-        log.info(f"Using proxy: {_proxy_url}")
-    else:
-        log.error(f"Invalid proxy URL: {_proxy_url}")
-        exit()
-
-def send_webhook(payload:str | dict):
-    """
-    ### Description ###
-    Send a webhook to the specified URL(s).
-    
-    ### Parameters ###
-        - `payload` (str | dict): The content of the webhook to send
-        
-    ### Example ###
-    ```python
-    send_webhook("Hello, World!")
-    ```
-    """
-    headers = {
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11"
-        }
-    for webhook_url in _webhook_urls:
-        res = send_post_request(webhook_url, payload, headers, proxies=_proxies)
-        if res.status_code >= 200 and res.status_code < 300:
-            log.ok(f"Sent webhook to {webhook_url} successfully, response code: {res.status_code}")
-        elif retry_after := res.headers.get("Retry-After"):
-            if res.status_code == 429:
-                log.warning(f"Sent webhook to {webhook_url} failed, response code: {res.status_code}, Content: {payload}, Retry-After header({RETRY_AFTER_HEADER}) found, auto retry after {retry_after}s...")
-                plan_to_run_run_at(_time.time() + float(retry_after), send_webhook, payload)
-                continue
-            log.error(f"Sent webhook to {webhook_url} failed, response code: {res.status_code}, Content: {payload}.")

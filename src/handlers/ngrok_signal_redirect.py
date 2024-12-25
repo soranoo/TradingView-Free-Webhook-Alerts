@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
-from src import log, send_webhook, shutdown, event_subscribe, event_unsubscribe, api_server_start, StoppableThread, TRADINGVIEW_ALERT_EMAIL_ADDRESS
+from src import log, shutdown, event_subscribe, event_unsubscribe, api_server_start, StoppableThread, TRADINGVIEW_ALERT_EMAIL_ADDRESS
 from src.smart_import import try_import
+from src.broadcast import broadcast
 
 class NgrokSignalRedirect:
     class _EventID:
@@ -38,7 +39,7 @@ class NgrokSignalRedirect:
 
         log.info(f"Sending webhook alert<{email_subject}>, content: {email_content}")
         try:
-            send_webhook(email_content)
+            broadcast(email_content)
             log.info(f"The whole process taken {self.calculate_seconds_to_now(receive_datetime)}s.")
         except Exception as err:
             log.error(f"Sent webhook failed, reason: {err}")

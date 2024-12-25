@@ -37,8 +37,8 @@ log_with_full_colors = config.get("log_full_color")
 config_version = config.get("config_version")
 
 # ---------------* Main *---------------
-__version__ = "2.6.3"
-expect_config_version = "1.0.1"
+__version__ = "2.6.4"
+expect_config_version = "1.0.2"
 github_config_toml_url = "https://github.com/soranoo/TradingView-Free-Webhook-Alerts/blob/main/config.example.toml"
 
 def main():
