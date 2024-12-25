@@ -86,7 +86,7 @@ def send_msg_to_tg(payload:str | dict) -> None:
     except Exception as e:
         log.error(f"Failed to send Telegram message: {str(e)}")
 
-def broadcast(payload:str | dict):
+def broadcast(payload:str | dict) -> None:
     """
     ### Description ###
     Broadcast the payload to all available methods.
@@ -94,8 +94,22 @@ def broadcast(payload:str | dict):
     ### Parameters ###
         - `payload` (str | dict): The content to broadcast
     """
+    success = True
     if webhook_urls:
-        send_webhook(payload)
-    if len(tg_bot_token.strip()) and len(tg_chat_id.strip()):
-        send_msg_to_tg(payload)
-    log.info("Broadcasted successfully.")
+        try:
+            send_webhook(payload)
+        except Exception as e:
+            success = False
+            log.error(f"Webhook broadcast failed: {str(e)}")
+
+    if tg_bot_token and tg_chat_id and tg_bot_token.strip() and tg_chat_id.strip():
+        try:
+            send_msg_to_tg(payload)
+        except Exception as e:
+            success = False
+            log.error(f"Telegram broadcast failed: {str(e)}")
+
+    if success:
+        log.info("Broadcasted successfully.")
+    else:
+        log.warning("Broadcast completed with some failures.")
