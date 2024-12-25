@@ -263,7 +263,7 @@ class EmailListener:
                 with open(file_path, "wb") as file:
                     file.write(part.get_payload(decode=True))
                 # Get the list of attachments, or initialize it if there isn't one
-                attachment_list = val_dict.get("attachments") or []
+                attachment_list = val_dict.get("attachments", [])
                 attachment_list.append(f"{file_path}")
                 val_dict["attachments"] = attachment_list
 
