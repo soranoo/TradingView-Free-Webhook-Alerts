@@ -15,15 +15,20 @@ imap_auto_reconnect = true
 # wait time (seconds) before reconnecting to IMAP server
 imap_auto_reconnect_wait = 10
 
+# ---------------* Network (only apply when broadcast) *---------------
+proxy_url = "" # eg. http://username:password@0.0.0.0:8080
+
 # ---------------* ngrok *---------------
 ngrok_auth_token = "YourAuthToken"
 
-# --------------* Webhook *--------------
+# --------------* Webhook (Broadcast) *--------------
 webhook_urls = [
     "Webhook URL",
     ]
 
-proxy_url = "" # eg. http://username:password@0.0.0.0:8080
+# ---------------* Telegram (Broadcast) *---------------
+tg_bot_token = ""
+tg_chat_id = ""
 
 # ---------------* Dicord *---------------
 discord_log = false
@@ -43,4 +48,4 @@ log_time_zone = false
 log_full_color = false
 
 # ----------------* don't touch *----------------
-config_version = "1.0.1"
+config_version = "1.0.2"

@@ -260,22 +260,19 @@ class EmailListener:
             if bool(file_name):
                 # Generate file path
                 file_path = os.path.join(self.attachment_dir, file_name)
-                file = open(file_path, "wb")
-                file.write(part.get_payload(decode=True))
-                file.close()
+                with open(file_path, "wb") as file:
+                    file.write(part.get_payload(decode=True))
                 # Get the list of attachments, or initialize it if there isn't one
-                attachment_list = val_dict.get("attachments") or []
-                attachment_list.append("{}".format(file_path))
+                attachment_list = val_dict.get("attachments", [])
+                attachment_list.append(f"{file_path}")
                 val_dict["attachments"] = attachment_list
 
-            # If the part is html text
             elif part.get_content_type() == "text/html":
                 # Convert the body from html to plain text
                 val_dict["Plain_HTML"] = html2text.html2text(
                         part.get_payload())
                 val_dict["HTML"] = part.get_payload()
 
-            # If the part is plain text
             elif part.get_content_type() == "text/plain":
                 # Get the body
                 val_dict["Plain_Text"] = part.get_payload()

@@ -1,5 +1,5 @@
 # TradingView-Free-Webhook-Alerts
-Project start on 01-02-2022
+The project starts on 01-02-2022.
 
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -14,6 +14,18 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - 🎄 [Dec 25, 2024] 🎁 - >>>
+Support broadcast to [Telegram](#-support-broadcast-methods)
+
+2 new fields added to the [config file](/config.example.toml). Don't forget to update your existing [config file](/config.example.toml).
+
+```toml
+# ---------------* Telegram (Broadcast) *---------------
+tg_bot_token = ""
+tg_chat_id = ""
+```
+Fill these fields with your Telegram Bot Token and Chat ID to enable the Telegram broadcast feature.
+
 ###### <<< - [Aug 16, 2024] - >>>
 Added Google App Script as a cloud provider to the cloud version, Thanks [@Priyanshu-raj95](https://github.com/Priyanshu-raj95)! ([Read Docs](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/discussions/81))
 
@@ -62,6 +74,21 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 | **Setup Docs** | [DOCS](docs/gettingstarted.md#3-traditional-version) | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/gettingstarted.md#2-ngrok-version) | [DOCS](docs/cloud-versions/cloud-versions.md) |
 
 > The ngrok Docker version setup is similar to the ngrok local version so I am not going to make a tutorial video for it.
+
+## 📺 Support Broadcast Methods
+
+> The term "Broadcast" means sending your TradingView alerts to multiple destinations.
+
+| | Webhook<sup>1</sup> | Telegram |
+| --- | --- | --- |
+| **Local (traditional)** | Supported | Supported |
+| **Local (ngrok)** | Supported | Supported |
+| **Docker (ngrok)** | Supported | Supported |
+| **Cloud** | Supported | Supported<sup>2</sup> |
+
+1. All applications support Webhook, for example, Discord, 3commas, etc.
+2. [Telegram Alert #58](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/discussions/58#discussioncomment-7658366)
+
 
 ## 📬 Notice
 #### Local (traditional)

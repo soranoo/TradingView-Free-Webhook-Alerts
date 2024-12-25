@@ -1,6 +1,6 @@
+import time as _time
 from .smart_import import try_import
 
-try_import("toml")
 import toml as _toml
 import os as _os
 
@@ -13,6 +13,7 @@ from .multi_task import StoppableThread
 from .api_server import start as api_server_start
 from .discord_utilities import Embed as DiscordEmbed
 from .PlanToRun import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
+from .constants import TRADINGVIEW_ALERT_EMAIL_ADDRESS, RETRY_AFTER_HEADER, POST_REQUEST_HEADERS
 
 class log_levels:
     """
@@ -41,3 +42,16 @@ __location__ = _os.path.realpath(_os.path.join(_os.getcwd(), _os.path.dirname(__
 project_main_directory = _os.path.dirname(__location__)
 
 config = _toml.load(_os.path.join(project_main_directory, "config.toml"))
+
+def shutdown(seconds:float = 10):
+    """
+    ### Description ###
+    Shutdown the program after a certain amount of time in seconds.
+    
+    ### Parameters ###
+        - `seconds` (float): The amount of time to wait before shutting down the program
+    """
+    log.warning(f"The program will shut down after {seconds}s...")
+    _time.sleep(seconds)
+    log.thread.stop()
+    exit()
