@@ -14,7 +14,7 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
-###### <<< - [Mar 03, 2025] - >>>
+###### <<< - [Mar 02, 2025] - >>>
 - Removed `Google App Script` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
 - Not longer recommend using `Pipedream` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
 - Added `Zapier` as a cloud provider. ([Read Docs](docs/cloud-versions/zapier/zapier.md))
