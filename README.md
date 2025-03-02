@@ -14,6 +14,10 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Mar 03, 2025] - >>>
+- Removed `Google App Script` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
+- Not longer recommend using `Pipedream` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
+- Added `Zapier` as a cloud provider. ([Read Docs](docs/cloud-versions/zapier/zapier.md))
 ###### <<< - 🎄 [Dec 25, 2024] 🎁 - >>>
 Support broadcast to [Telegram](#-support-broadcast-methods)
 
@@ -25,20 +29,6 @@ tg_bot_token = ""
 tg_chat_id = ""
 ```
 Fill these fields with your Telegram Bot Token and Chat ID to enable the Telegram broadcast feature.
-
-###### <<< - [Aug 16, 2024] - >>>
-Added Google App Script as a cloud provider to the cloud version, Thanks [@Priyanshu-raj95](https://github.com/Priyanshu-raj95)! ([Read Docs](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/discussions/81))
-
-###### <<< - [Mar 19, 2024] - >>>
-Added proxy support for all versions. Check out the config file for more details.
-
-###### <<< - 🎄 [Dec 24, 2023] 🎁 - >>>
-Added Docker Version ([Read Docs](docs/gettingstarted.md#2-ngrok-version))
-
-###### <<< - [Apr 07, 2023]- >>>
-Added [tutorial videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo)
-
-Config file has been updated. Don't forget to update your existing config file.
 
 
 ## 🗝️ Features
@@ -87,7 +77,7 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 | **Cloud** | Supported | Supported<sup>2</sup> |
 
 1. All applications support Webhook, for example, Discord, 3commas, etc.
-2. [Telegram Alert #58](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/discussions/58#discussioncomment-7658366)
+2. See the dedicated provider docs for more details.
 
 
 ## 📬 Notice

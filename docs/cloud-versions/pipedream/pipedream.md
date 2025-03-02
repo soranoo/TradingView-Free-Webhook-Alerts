@@ -2,6 +2,9 @@
 
 [🔙 Back to cloud-versions.md](/docs/cloud-versions/cloud-versions.md)
 
+> [!WARNING]\
+> Pipedream is not recommended anymore. Please use [Zapier](zapier/zapier.md) instead. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more information.
+
 ## ▶️ Tutorial Video
 - [Youtube](https://youtu.be/kTEcJhz0M98)
 
