@@ -121,7 +121,7 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=soranoo/TradingView-Free-Webhook-Alerts&type=Date)](https://star-history.com/#soranoo/TradingView-Free-Webhook-Alerts&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=soranoo/TradingView-Free-Webhook-Alerts&type=Date)](https://www.star-history.com/#soranoo/TradingView-Free-Webhook-Alerts&Date)
 
 ## ☕ Donation
 Love the program? Consider a donation to support my work.
