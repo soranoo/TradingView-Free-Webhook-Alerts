@@ -9,7 +9,7 @@ click==8.1.7
 colorama==0.4.6
 colorlog==6.9.0
 discord.py==2.4.0
-Flask==3.1.0
+Flask==3.1.1
 frozenlist==1.5.0
 html2text==2024.2.26
 idna==3.10
