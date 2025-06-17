@@ -14,6 +14,17 @@ Give me a ⭐ if you like it.
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+###### <<< - [Jun 17, 2025] - >>>
+- Added static ngrok domain + static API key as an option.
+- 2 new fields added to the [config file](/config.example.toml)
+```toml
+# ---------------* ngrok *---------------
+ngrok_static_domain = ""
+x_api_key = ""
+```
+Fill the first with your static ngrok domain if you want to use that. The second will be filled automatically by the program.
+
+
 ###### <<< - [Mar 02, 2025] - >>>
 - Removed `Google App Script` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
 - Not longer recommend using `Pipedream` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.

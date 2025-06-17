@@ -7,3 +7,4 @@ _dev.py
 **/data
 **/src/__pycache__
 *.pyc
+**/.venv
