@@ -24,6 +24,8 @@ x_api_key = ""
 ```
 Fill the first with your static ngrok domain if you want to use that. The second will be filled automatically by the program.
 
+- Timezone bug fix.
+
 
 ###### <<< - [Mar 02, 2025] - >>>
 - Removed `Google App Script` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
