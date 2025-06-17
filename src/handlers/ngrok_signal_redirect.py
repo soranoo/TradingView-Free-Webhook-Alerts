@@ -10,14 +10,19 @@ class NgrokSignalRedirect:
         
     # env
     ngrok_auth_token: str
+    ngrok_static_domain: str
+    x_api_key: str
         
-    def __init__(self, ngrok_auth_token: str):
+    def __init__(self, ngrok_auth_token: str, ngrok_static_domain: str | None, x_api_key: str | None):
         self.ngrok_auth_token = ngrok_auth_token
+        self.ngrok_static_domain = ngrok_static_domain
+        self.x_api_key = x_api_key
+    
     
     def calculate_seconds_to_now(self, date_str: str) -> float:
-        timestamp = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-        now = datetime.now(timezone.utc)
-        diff = now - timestamp
+        timestamp = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=timezone.utc)       # Bug fix. This gives error if not "timezone aware" datetime object. 
+        now = datetime.now(timezone.utc)                                                                    # ".replace(tzinfo=timezone.utc)" puts "timestamp" in the same timezone as "now". 
+        diff = now - timestamp                                                  
         return diff.total_seconds()
     
     def on_data_received(self, data: dict):
@@ -39,7 +44,7 @@ class NgrokSignalRedirect:
 
         log.info(f"Sending webhook alert<{email_subject}>, content: {email_content}")
         broadcast(email_content)
-        log.info(f"The whole process taken {self.calculate_seconds_to_now(receive_datetime)}s.")
+        log.info(f"The whole process has taken {self.calculate_seconds_to_now(receive_datetime)}s.")
         
     def setup_ngrok(self, port: int):
         try_import("pyngrok")
@@ -48,12 +53,19 @@ class NgrokSignalRedirect:
         log.info("Setting up ngrok...")
         ngrok.set_auth_token(self.ngrok_auth_token)
         ngrok_conf.get_default().log_event_callback = None
-        http_tunnel = ngrok.connect(port, "http")
+
+        # This logic will make use of the free static ngrok domain if as defined in the config file.
+        if self.ngrok_static_domain != None:
+            http_tunnel = ngrok.connect(port, bind_tls=True, domain=self.ngrok_static_domain)
+        else:
+            http_tunnel = ngrok.connect(port, "http")
+        
+        
         log.info(f"Your ngrok URL: {http_tunnel.public_url}")
         event_unsubscribe(self._EventID.API_PORT, self.setup_ngrok)
         
     def setup_api_server(self):
-        thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT,))
+        thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT, self.ngrok_static_domain, self.x_api_key)) # ngrok_static_domain and x_api_key need to be passed to api_server_start
         thread.start()
         
     def main(self):
@@ -62,6 +74,6 @@ class NgrokSignalRedirect:
             shutdown()
         event_subscribe(self._EventID.API_PORT, self.setup_ngrok)
         event_subscribe(self._EventID.API_REV, self.on_data_received)
-        thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT, self._EventID.API_REV))
+        thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT, self._EventID.API_REV, self.ngrok_static_domain, self.x_api_key)) # ngrok_static_domain and x_api_key need to be passed to api_server_start
         thread.start()
         thread.join()

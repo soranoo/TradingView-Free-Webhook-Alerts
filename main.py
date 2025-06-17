@@ -24,7 +24,9 @@ imap_server_port:int | None = config.get("imap_server_port")
 imap_auto_reconnect:bool | None = config.get("imap_auto_reconnect")
 imap_auto_reconnect_wait:int | None = config.get("imap_auto_reconnect_wait")
 
-ngrok_auth_token = config.get("ngrok_auth_token")
+ngrok_auth_token = config.get("ngrok_auth_token")   	# set by the user in the toml file and passed to NgrokSignalRedirect() as an argument
+ngrok_static_domain:str | None = config.get("ngrok_static_domain") # set by the user in the toml file and passed to NgrokSignalRedirect() as an argument
+x_api_key:str | None = config.get("x_api_key")                     # set automatically in the toml file and passed to NgrokSignalredirect() as an argument
 
 discord_log = config.get("discord_log")
 discord_webhook_url = config.get("discord_webhook_url")
@@ -59,7 +61,7 @@ def main():
             imap_auto_reconnect, imap_auto_reconnect_wait
                               ).main()
     else:
-        NgrokSignalRedirect(ngrok_auth_token).main()
+        NgrokSignalRedirect(ngrok_auth_token, ngrok_static_domain, x_api_key).main()            # Here we pass the config for the static ngrok domain and fixed API key.
 
 if __name__ == "__main__":
     # welcome message

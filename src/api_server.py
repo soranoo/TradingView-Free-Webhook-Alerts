@@ -9,6 +9,7 @@ import time
 import requests
 import secrets
 import logging
+import toml
 
 #! Store API key in header is more secure than in URL
 
@@ -37,7 +38,7 @@ def auth():
 def generate_api_key(num:int = 16) -> str:
     return secrets.token_urlsafe(num)
 
-def start(event_id_port:str = None, event_id_rev:str = None):
+def start(event_id_port:str = None, event_id_rev:str = None, ngrok_static_domain:str = None, x_api_key:str = None):
     """
     ### Description ###
     Start the API server
@@ -71,7 +72,30 @@ def start(event_id_port:str = None, event_id_rev:str = None):
         if rep.status_code == 204:
             log.info(f"Port {port} is free~")
             log.ok(f"API server is ready to use, port: {port}")
-            api_key = generate_api_key(16)
+
+        # logic for the fixed API key:
+            
+        #   1. If the static domain is not specified, both API key and domain remain dynamic
+        #   2. If the static domain is specified and "x_api_key" is left empty the API key will be generated
+        #      and stored in the .toml file for the next time.
+        #   3.  
+            if  ngrok_static_domain != "" and x_api_key != "": 
+                log.info(f"Using ngrok static domain. Make sure that \"x_api_key\" has a secure value in the config file.")
+                api_key = x_api_key
+            elif ngrok_static_domain != "" and x_api_key == "":
+                log.info(f"Using ngrok static domain. Will update \"x_api_key\" in the config file.")
+                api_key = generate_api_key(16)
+                config_file = toml.load("config.toml")
+                config_file['x_api_key'] = api_key
+                with open ("config.toml", "w") as f:        # THis will unfortunately delete the formatting of the .toml file.
+                    toml.dump(config_file, f)               # afaik this is inevitable without external libraries or parsing the file line by line
+                                                            # which might slow things down. But I might be wrong.
+            else:      
+                log.info(f"Using ngrok dynamic domain. Both Domain and api-key will be randomly generated each time the program is run.")
+                api_key = generate_api_key(16)
+
+                
+
             log.info(f"Your API key: {api_key}")
             log.info("Please add 'X-API-KEY' and the API key to the header as the header name and header value of your request.")
             if event_id_port:

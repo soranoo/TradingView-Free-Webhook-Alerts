@@ -83,8 +83,21 @@ automation service.
 
 11. Copy the "API KEY" and "ngrok URL" from the command prompt and paste them somewhere for later use.
 ![img](imgs/ngrok_version_setup_02.png)
+
 12. Keep the program running in the background.
-> ⚠️ Every time you start the program, you will get a new API KEY and ngrok URL. You need to update the webhook service with the new API KEY and ngrok URL.
+
+   ⚠️  By default, every time you start the program, you will get a new API KEY and ngrok URL. In this modey ou need to update the webhook service with the new API KEY and ngrok URL.
+   It is also possible to run the program using a static domain. Ngrok provides one static domain for free. Follow these steps in order to use this program with a free static domain:
+
+   - Log in to your ngrok account.
+   - Navigate to `Universal Edge` > `Domains` and click `+ New Domain` 
+   - Copy your domain in the [`config.toml`](config.toml) file filling the `ngrok_static_domain` space as such:
+
+    ngrok_static_domain = "your-static-domain.ngrok-free.app"
+   
+   - The API key will be automatically generated and filled in the `x-api-key` space after you run the program with the static domain the first time.
+   - To reset the API key simply change the `x-api-key` space to empty.
+   - To restore the random URL mode with dynamic API key just leave the `ngrok_static_domain` space empty. 
 
 <a name="ngrok-version-setting-up-pipedream"></a>
 #### Setting up [pipedream](https://pipedream.com/)
