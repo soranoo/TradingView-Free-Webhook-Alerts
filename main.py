@@ -4,9 +4,9 @@ from rich import print as cprint
 from rich import traceback
 
 from src import config, log , create_logger, shutdown
-from handlers.discord_log_handler import DiscordLogHandler
-from handlers.email_signal_extraction import EmailSignalExtraction
-from handlers.ngrok_signal_redirect import NgrokSignalRedirect
+from src.handlers.discord_log_handler import DiscordLogHandler
+from src.handlers.email_signal_extraction import EmailSignalExtraction
+from src.handlers.ngrok_signal_redirect import NgrokSignalRedirect
 
 traceback.install()
 
@@ -23,13 +23,13 @@ imap_auto_reconnect_wait:int | None = config.get("imap_auto_reconnect_wait")
 ngrok_auth_token:str | None = config.get("ngrok_auth_token")
 ngrok_api_server_auth_key:str | None = config.get("ngrok_api_server_auth_key")
 
-discord_log:bool = config.get("discord_log", default=False)
+discord_log:bool = config.get("discord_log", False)
 discord_webhook_url:str | None = config.get("discord_webhook_url")
 
-log_with_colors:bool = config.get("log_color", default=True)
-log_with_time_zone:bool = config.get("log_time_zone", default=False)
-save_log:bool = config.get("log_save", default=True)
-log_with_full_colors:bool = config.get("log_full_color", default=True)
+log_with_colors:bool = config.get("log_color", True)
+log_with_time_zone:bool = config.get("log_time_zone", False)
+save_log:bool = config.get("log_save", True)
+log_with_full_colors:bool = config.get("log_full_color", True)
 
 config_version:str | None = config.get("config_version")
 
