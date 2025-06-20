@@ -9,6 +9,7 @@ import logging
 #! Store API key in header is more secure than in URL
 
 api_key = None
+GEN_API_KEY_LENGTH = 32 # Length of the generated API key
 event_id_receive = None
 START_PORT = 5000
 
@@ -67,11 +68,12 @@ def start(event_id_port:str | None = None, event_id_rev:str | None = None, fixed
         time.sleep(1)
         rep = requests.get(f"http://127.0.0.1:{port}/ping?auth={api_key}")
         if rep.status_code == 204:
+            # If ping is successful, the port is free
             log.info(f"Port {port} is free~")
             log.ok(f"API server is ready to use, port: {port}")
             # Use fixed API key if provided, otherwise generate a new one
             if not fixed_api_key:
-                api_key = generate_api_key(16)
+                api_key = generate_api_key(GEN_API_KEY_LENGTH)
             log.info(f"Your API key: {api_key}")
             if fixed_api_key:
                 log.info("Using configured fixed API key from config file.")
