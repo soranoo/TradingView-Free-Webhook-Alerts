@@ -37,7 +37,7 @@ if proxies != None:
         log.error(f"Invalid proxy URL: {proxy_url}")
         exit()
 
-def send_webhook(payload:str | dict):
+def send_webhook(payload: str | dict):
     """
     ### Description ###
     Send a webhook to the specified URL(s).

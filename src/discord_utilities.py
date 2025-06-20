@@ -58,6 +58,6 @@ class Embed(OrginalEmbed):
             raise ValueError("No webhook URL provided")
         return send_post_request(self.webhook_url, json.dumps({"embeds": [self.to_dict()]}))
 
-def send_message_to_webhook(url:str, message:str, embeds:list[dict] = None):
-    payload = json.dumps({"content": message, "embeds": embeds} )
+def send_message_to_webhook(url: str, message: str, embeds: list[dict] | None = None) -> requests.models.Response:
+    payload = json.dumps({"content": message, "embeds": embeds})
     return send_post_request(url, payload)

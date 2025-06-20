@@ -3,7 +3,7 @@ import sys
 import os
 import time
 
-def try_import(import_module:str, submodules:list=[], pip_package_name:str=None, force_import:bool=False):
+def try_import(import_module: str, submodules: list = [], pip_package_name: str | None = None, force_import: bool = False):
     """
     Try import the given module, return the module if success
     else install the module when the user confirm(said yes)
