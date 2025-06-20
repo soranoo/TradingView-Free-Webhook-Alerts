@@ -1,13 +1,3 @@
-try:
-    # If running with the current directory
-    from smart_import import try_import
-except ModuleNotFoundError or ImportError:
-    # If running by parent directory
-    from .smart_import import try_import
-
-try_import("colorama")
-try_import("colorlog")
-
 import os
 import logging
 import colorama
@@ -61,7 +51,7 @@ def create_log_file_name() -> str:
     DATE_FORMAT = "%d-%m-%Y"
     return f"{datetime.now().strftime(DATE_FORMAT)}.log"
 
-def add_logging_level(level_name:str, level_number:int, log_color:str, method_name:str = None):
+def add_logging_level(level_name:str, level_number:int, log_color:str, method_name:str | None = None):
     """
     ### Description ###
     Comprehensively adds a new logging level to the `logging` module and the
@@ -128,7 +118,7 @@ def get_datetime_formant(included_timezone:bool = False,
     return DATETIME_FORMAT_WITH_TIMEZONE if included_timezone else DATETIME_FORMAT
 
 
-def create_file_handler(log_folder_path:str = None, log_file_name:str = None,
+def create_file_handler(log_folder_path:str | None = None, log_file_name:str | None = None,
                         included_timezone:bool = False, 
                         use_local_version_time:bool = False,) -> logging.FileHandler:
     """
@@ -162,10 +152,10 @@ def create_file_handler(log_folder_path:str = None, log_file_name:str = None,
 
 
 def create_console_handler(color_print:bool = True, print_log_msg_color:bool = True,
-                            included_timezone:bool = False, use_local_version_time:bool = False,) -> logging.FileHandler:
+                            included_timezone:bool = False, use_local_version_time:bool = False,) -> logging.StreamHandler:
     """
     ### Description ###
-    Create a file handler for the logger.
+    Create a console handler for the logger.
     
     - Reference: https://github.com/borntyping/python-colorlog
     - Reference: https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
@@ -180,7 +170,7 @@ def create_console_handler(color_print:bool = True, print_log_msg_color:bool = T
                                                         EG. "Fri Dec 23 00:03:37 2022" instead of "23-12-2022 00:03:37"
     
     ### Returns ###
-        - (logging.FileHandler): The file handler.
+        - (logging.StreamHandler): The console handler.
     """
     date_format = get_datetime_formant(included_timezone, use_local_version_time)
     
@@ -200,11 +190,11 @@ def create_console_handler(color_print:bool = True, print_log_msg_color:bool = T
     return console_handler
 
 
-def create_logger(log_folder_path:str = None, save_log:bool = True,
+def create_logger(log_folder_path:str | None = None, save_log:bool = True,
                   color_print:bool = True, print_log_msg_color:bool = True, 
                   included_timezone:bool = False,use_local_version_time:bool = False,
                   log_level:int = logging.DEBUG, logger_name:str = "cofree", 
-                  rebuild_mode:bool = False, rebuild_logger:logging.Logger = None) -> logging.Logger:
+                  rebuild_mode:bool = False, rebuild_logger:logging.Logger | None = None) -> logging.Logger:
     """
     ### Description ###
     Create a logger.

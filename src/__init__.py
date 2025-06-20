@@ -1,19 +1,16 @@
 import time as _time
-from .smart_import import try_import
-
 import toml as _toml
 import os as _os
 
-from .network import send_post_request, is_url_valid
-from .event import subscribe as event_subscribe, unsubscribe as event_unsubscribe, post_event as event_post
-from .logger import logger as log, add_logging_level, Colorcode, create_logger
-from .http_status import http_status
-from .email_listener import EmailListener
-from .multi_task import StoppableThread
-from .api_server import start as api_server_start
-from .discord_utilities import Embed as DiscordEmbed
-from .PlanToRun import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
-from .constants import TRADINGVIEW_ALERT_EMAIL_ADDRESS, RETRY_AFTER_HEADER, POST_REQUEST_HEADERS
+from src.network import send_post_request, is_url_valid
+from src.event import subscribe as event_subscribe, unsubscribe as event_unsubscribe, post_event as event_post
+from src.logger import logger as log, add_logging_level, Colorcode, create_logger
+from src.email_listener import EmailListener
+from src.multi_task import StoppableThread
+from src.api_server import start as api_server_start
+from src.discord_utilities import Embed as DiscordEmbed
+from src.PlanToRun import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
+from src.constants import TRADINGVIEW_ALERT_EMAIL_ADDRESS, RETRY_AFTER_HEADER, POST_REQUEST_HEADERS
 
 class log_levels:
     """
@@ -53,5 +50,4 @@ def shutdown(seconds:float = 10):
     """
     log.warning(f"The program will shut down after {seconds}s...")
     _time.sleep(seconds)
-    log.thread.stop()
     exit()

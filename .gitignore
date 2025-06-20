@@ -3,6 +3,8 @@ start-env.py
 _dev.py
 **/.temp
 **/env
+**/.venv
+**/.ruff_cache
 **/logs
 **/data
 **/src/__pycache__

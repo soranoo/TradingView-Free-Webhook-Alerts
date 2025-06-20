@@ -1,14 +1,13 @@
 import logging
 from queue import Queue
-from src import DiscordEmbed, StoppableThread, log
+from .. import DiscordEmbed, StoppableThread, log
 
 class DiscordLogHandler(logging.Handler):
     """
     A log handler that will send the log record to the Discord.
     """
-    
-    discord_webhook_url = None
-    
+    discord_webhook_url: str | None = None
+
     def __init__(self, discord_webhook_url: str):
         super().__init__(level=logging.INFO)
         self.queue = Queue()
@@ -50,4 +49,3 @@ class DiscordLogHandler(logging.Handler):
         if not embed:
             return
         self.queue.put(embed)
-        

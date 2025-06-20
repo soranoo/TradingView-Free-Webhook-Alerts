@@ -14,7 +14,7 @@ POST_REQUEST_HEADERS = {
 # increase retries number
 requests.adapters.DEFAULT_RETRIES = 5
 
-def is_url_valid(url:str) -> bool:
+def is_url_valid(url: str) -> bool:
     """
     ### Description ###
     Check if the URL is valid
@@ -27,7 +27,7 @@ def is_url_valid(url:str) -> bool:
     """
     return isinstance(extract_url_domain(url), str)
 
-def extract_url_domain(url:str) -> bool or str:
+def extract_url_domain(url: str) -> str | None:
     """
     ### Description ###
     Extract domain from URL
@@ -40,7 +40,7 @@ def extract_url_domain(url:str) -> bool or str:
     """
     return m[1] if (m := re.search(URL_REGEX, url)) else None
 
-def send_post_request(url:str, payload:str or dict, headers:dict = None, proxies:dict = None) -> requests.models.Response:
+def send_post_request(url: str, payload: str | dict, headers: dict | None = None, proxies: dict | None = None) -> requests.models.Response:
     """
     ### Description ###
     Send HTTP POST request

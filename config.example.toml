@@ -20,6 +20,7 @@ proxy_url = "" # eg. http://username:password@0.0.0.0:8080
 
 # ---------------* ngrok *---------------
 ngrok_auth_token = "YourAuthToken"
+ngrok_api_server_auth_key = "" # Leave empty to auto-generate, or set a fixed API key
 
 # --------------* Webhook (Broadcast) *--------------
 webhook_urls = [
