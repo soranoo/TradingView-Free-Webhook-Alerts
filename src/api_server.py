@@ -37,7 +37,7 @@ def auth():
 def generate_api_key(num:int = 16) -> str:
     return secrets.token_urlsafe(num)
 
-def start(event_id_port:str = None, event_id_rev:str = None):
+def start(event_id_port:str | None = None, event_id_rev:str | None = None, fixed_api_key:str | None = None):
     """
     ### Description ###
     Start the API server
@@ -45,6 +45,7 @@ def start(event_id_port:str = None, event_id_rev:str = None):
     ### Parameters ###
         - `event_id_port`: Event ID to post the port number
         - `event_id_rev`: Event ID to post the received data
+        - `fixed_api_key`: Optional fixed API key to use instead of generating one
     """
     def _try_start_with(p:int):
         # start server
@@ -65,14 +66,19 @@ def start(event_id_port:str = None, event_id_rev:str = None):
         
         thread = StoppableThread(target=_try_start_with, args=(port,))
         thread.start()
-        api_key = generate_api_key(32)
+        # Use fixed API key if provided, otherwise generate a temporary one for testing
+        api_key = fixed_api_key if fixed_api_key else generate_api_key(32)
         time.sleep(1)
         rep = requests.get(f"http://127.0.0.1:{port}/ping?auth={api_key}")
         if rep.status_code == 204:
             log.info(f"Port {port} is free~")
             log.ok(f"API server is ready to use, port: {port}")
-            api_key = generate_api_key(16)
+            # Use fixed API key if provided, otherwise generate a new one
+            if not fixed_api_key:
+                api_key = generate_api_key(16)
             log.info(f"Your API key: {api_key}")
+            if fixed_api_key:
+                log.info("Using configured fixed API key from config file.")
             log.info("Please add 'X-API-KEY' and the API key to the header as the header name and header value of your request.")
             if event_id_port:
                 event_post(event_id_port, port)

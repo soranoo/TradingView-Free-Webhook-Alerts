@@ -25,6 +25,7 @@ imap_auto_reconnect:bool | None = config.get("imap_auto_reconnect")
 imap_auto_reconnect_wait:int | None = config.get("imap_auto_reconnect_wait")
 
 ngrok_auth_token = config.get("ngrok_auth_token")
+ngrok_api_server_auth_key = config.get("ngrok_api_server_auth_key")
 
 discord_log = config.get("discord_log")
 discord_webhook_url = config.get("discord_webhook_url")
@@ -59,7 +60,7 @@ def main():
             imap_auto_reconnect, imap_auto_reconnect_wait
                               ).main()
     else:
-        NgrokSignalRedirect(ngrok_auth_token).main()
+        NgrokSignalRedirect(ngrok_auth_token, ngrok_api_server_auth_key).main()
 
 if __name__ == "__main__":
     # welcome message

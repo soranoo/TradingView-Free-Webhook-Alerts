@@ -10,9 +10,11 @@ class NgrokSignalRedirect:
         
     # env
     ngrok_auth_token: str
+    ngrok_api_server_auth_key: str | None
         
-    def __init__(self, ngrok_auth_token: str):
+    def __init__(self, ngrok_auth_token: str, ngrok_api_server_auth_key: str | None = None):
         self.ngrok_auth_token = ngrok_auth_token
+        self.ngrok_api_server_auth_key = ngrok_api_server_auth_key
     
     def calculate_seconds_to_now(self, date_str: str) -> float:
         timestamp = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%fZ")
@@ -50,8 +52,7 @@ class NgrokSignalRedirect:
         ngrok_conf.get_default().log_event_callback = None
         http_tunnel = ngrok.connect(port, "http")
         log.info(f"Your ngrok URL: {http_tunnel.public_url}")
-        event_unsubscribe(self._EventID.API_PORT, self.setup_ngrok)
-        
+        event_unsubscribe(self._EventID.API_PORT, self.setup_ngrok)        
     def setup_api_server(self):
         thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT,))
         thread.start()
@@ -62,6 +63,6 @@ class NgrokSignalRedirect:
             shutdown()
         event_subscribe(self._EventID.API_PORT, self.setup_ngrok)
         event_subscribe(self._EventID.API_REV, self.on_data_received)
-        thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT, self._EventID.API_REV))
+        thread = StoppableThread(target=api_server_start, args=(self._EventID.API_PORT, self._EventID.API_REV, self.ngrok_api_server_auth_key))
         thread.start()
         thread.join()
