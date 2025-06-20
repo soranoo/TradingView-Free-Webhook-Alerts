@@ -1,16 +1,12 @@
-from src import shutdown
-
 import pyfiglet
 import logging
-
 from rich import print as cprint
 from rich import traceback
 
-from src import config
-from src import log , create_logger
-from src.handlers.discord_log_handler import DiscordLogHandler
-from src.handlers.email_signal_extraction import EmailSignalExtraction
-from src.handlers.ngrok_signal_redirect import NgrokSignalRedirect
+from src import config, log , create_logger, shutdown
+from handlers.discord_log_handler import DiscordLogHandler
+from handlers.email_signal_extraction import EmailSignalExtraction
+from handlers.ngrok_signal_redirect import NgrokSignalRedirect
 
 traceback.install()
 
@@ -24,18 +20,18 @@ imap_server_port:int | None = config.get("imap_server_port")
 imap_auto_reconnect:bool | None = config.get("imap_auto_reconnect")
 imap_auto_reconnect_wait:int | None = config.get("imap_auto_reconnect_wait")
 
-ngrok_auth_token = config.get("ngrok_auth_token")
-ngrok_api_server_auth_key = config.get("ngrok_api_server_auth_key")
+ngrok_auth_token:str | None = config.get("ngrok_auth_token")
+ngrok_api_server_auth_key:str | None = config.get("ngrok_api_server_auth_key")
 
-discord_log = config.get("discord_log")
-discord_webhook_url = config.get("discord_webhook_url")
+discord_log:bool = config.get("discord_log", default=False)
+discord_webhook_url:str | None = config.get("discord_webhook_url")
 
-log_with_colors = config.get("log_color")
-log_with_time_zone = config.get("log_time_zone")
-save_log = config.get("log_save")
-log_with_full_colors = config.get("log_full_color")
+log_with_colors:bool = config.get("log_color", default=True)
+log_with_time_zone:bool = config.get("log_time_zone", default=False)
+save_log:bool = config.get("log_save", default=True)
+log_with_full_colors:bool = config.get("log_full_color", default=True)
 
-config_version = config.get("config_version")
+config_version:str | None = config.get("config_version")
 
 # ---------------* Main *---------------
 __version__ = "2.6.4"
@@ -52,15 +48,35 @@ def main():
         rebuild_logger=log
     )
     if discord_log:
-        log.addHandler(DiscordLogHandler())
+        if not discord_webhook_url:
+            log.error("Discord webhook URL is not set, please set it in the config file.")
+            shutdown()
+        log.addHandler(DiscordLogHandler(discord_webhook_url))
     if mode_traditional:
+        # Config check before EmailSignalExtraction
+        missing = []
+        if not email_address:
+            missing.append("email_address")
+        if not login_password:
+            missing.append("login_password")
+        if not imap_server_address:
+            missing.append("imap_server_address")
+        if not imap_server_port:
+            missing.append("imap_server_port")
+        if missing:
+            log.error(f"Missing required email config: {', '.join(missing)}. Please set these in the config file.")
+            shutdown()
         EmailSignalExtraction(
             email_address, login_password,
             imap_server_address, imap_server_port,
             imap_auto_reconnect, imap_auto_reconnect_wait
-                              ).main()
+        ).main()
     else:
-        NgrokSignalRedirect(ngrok_auth_token, ngrok_api_server_auth_key).main()
+        if not ngrok_auth_token:
+            log.error("Missing ngrok auth token, please set it in the config file.")
+            shutdown()
+        else:
+            NgrokSignalRedirect(ngrok_auth_token, ngrok_api_server_auth_key).main()
 
 if __name__ == "__main__":
     # welcome message

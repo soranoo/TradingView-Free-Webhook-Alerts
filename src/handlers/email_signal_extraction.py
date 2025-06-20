@@ -3,8 +3,8 @@ import json
 import os
 import time
 from datetime import datetime, timezone
-from src import EmailListener, log, shutdown, project_main_directory, TRADINGVIEW_ALERT_EMAIL_ADDRESS
-from src.broadcast import broadcast
+from .. import EmailListener, log, shutdown, project_main_directory, TRADINGVIEW_ALERT_EMAIL_ADDRESS
+from ..broadcast import broadcast
 
 class EmailSignalExtraction:
     # env
@@ -52,7 +52,7 @@ class EmailSignalExtraction:
         except Exception:
             return False
 
-    def connect_imap_server(self) -> EmailListener:
+    def connect_imap_server(self) -> EmailListener | None:
         try:
             el = EmailListener(email=self.email_address, app_password=self.login_password, folder="INBOX", attachment_dir=os.path.join(project_main_directory, ".temp", "emails"), logger=log.debug, imap_address=self.imap_server_address, imap_port=self.imap_server_port)
             # Log into the IMAP server
@@ -65,6 +65,7 @@ class EmailSignalExtraction:
             log.warning(f"The program will try to reconnect after {self.imap_auto_reconnect_wait}s...")
             time.sleep(self.imap_auto_reconnect_wait)
             self.main()
+            return None
 
     def on_email_received(self, el, msgs):
         for data in msgs.values():
@@ -99,15 +100,15 @@ class EmailSignalExtraction:
             log.error("\"imap_auto_reconnect_wait\"(config.toml) must be greater than 0")
             shutdown()
             
-        global last_email_uid
         log.info("Initializing...")
         el = self.connect_imap_server()
+        
+        if not el:
+            return
+        
         latest_email = self.get_latest_email(el)
-        last_email_uid = int(latest_email["Email_UID"]) if latest_email else False
-        if last_email_uid is not False:
-            self.add_email_to_history(last_email_uid)
-        else:
-            self.add_email_to_history(-1)
+        self.last_email_uid = int(latest_email["Email_UID"]) if latest_email else -1
+        self.add_email_to_history(self.last_email_uid)
 
         log.info(f"Listening to IMAP server({self.imap_server_address})...")
         el.listen(-1, process_func=self.on_email_received)

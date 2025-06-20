@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
-from src import log, shutdown, event_subscribe, event_unsubscribe, api_server_start, StoppableThread, TRADINGVIEW_ALERT_EMAIL_ADDRESS
-from src.smart_import import try_import
-from src.broadcast import broadcast
+from .. import log, shutdown, event_subscribe, event_unsubscribe, api_server_start, StoppableThread, TRADINGVIEW_ALERT_EMAIL_ADDRESS
+from ..broadcast import broadcast
+from pyngrok import ngrok, conf as ngrok_conf
 
 class NgrokSignalRedirect:
     class _EventID:
@@ -44,13 +44,10 @@ class NgrokSignalRedirect:
         log.info(f"The whole process taken {self.calculate_seconds_to_now(receive_datetime)}s.")
         
     def setup_ngrok(self, port: int):
-        try_import("pyngrok")
-        from pyngrok import ngrok, conf as ngrok_conf
-    
         log.info("Setting up ngrok...")
         ngrok.set_auth_token(self.ngrok_auth_token)
         ngrok_conf.get_default().log_event_callback = None
-        http_tunnel = ngrok.connect(port, "http")
+        http_tunnel = ngrok.connect(port=port, proto="http")
         log.info(f"Your ngrok URL: {http_tunnel.public_url}")
         event_unsubscribe(self._EventID.API_PORT, self.setup_ngrok)        
     def setup_api_server(self):
