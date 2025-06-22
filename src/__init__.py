@@ -9,7 +9,7 @@ from src.email_listener import EmailListener
 from src.multi_task import StoppableThread
 from src.api_server import start as api_server_start
 from src.discord_utilities import Embed as DiscordEmbed
-from src.PlanToRun import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
+from src.plan_to_run import run_at as plan_to_run_run_at, terminate as plan_to_run_terminate
 from src.constants import TRADINGVIEW_ALERT_EMAIL_ADDRESS, RETRY_AFTER_HEADER, POST_REQUEST_HEADERS
 
 class log_levels:
