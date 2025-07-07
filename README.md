@@ -1,24 +1,33 @@
 # TradingView-Free-Webhook-Alerts
-The project starts on 01-02-2022.
 
+The project starts on 01-02-2022.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![GitHub repo size](https://img.shields.io/github/repo-size/soranoo/TradingView-Free-Webhook-Alerts)
 ![GitHub top language](https://img.shields.io/github/languages/top/soranoo/TradingView-Free-Webhook-Alerts)
 &nbsp;[![Donation](https://img.shields.io/static/v1?label=Donation&message=❤️&style=social)](https://github.com/soranoo/Donation)
 
-Providing the free webhook service to the basic plan users in TradingView. 
+Providing the free webhook service to the basic plan users in TradingView.
 
 Give me a ⭐ if you like it.
 
 ### Portal ↠ [Installation](docs/gettingstarted.md#installing-python-package) · [Usage](docs/gettingstarted.md#setting-up-tradingview-alert) · [Cloud Versions](docs/cloud-versions/cloud-versions.md) · [Videos](https://www.youtube.com/playlist?list=PLOHaKcov3Nkt0LIK1joPYgFnZY24zf_Wo) ↞
 
 ## :newspaper: NEWS
+
+###### <<< - [Jul 07, 2025] - >>>
+
+- Not longer recommend using `Zapier` as a cloud provider. See [Issue #94 Comment](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94#issuecomment-3044583854) for more details. ~~They put webhook into premium feature.~~ As an temporary solution, `Pipedream` still a viable option for free users.
+
+
 ###### <<< - [Mar 02, 2025] - >>>
+
 - Removed `Google App Script` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
 - Not longer recommend using `Pipedream` as a cloud provider. See [issue #94](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/94) for more details.
 - Added `Zapier` as a cloud provider. ([Read Docs](docs/cloud-versions/zapier/zapier.md))
+
 ###### <<< - 🎄 [Dec 25, 2024] 🎁 - >>>
+
 Support broadcast to [Telegram](#-support-broadcast-methods)
 
 2 new fields added to the [config file](/config.example.toml). Don't forget to update your existing [config file](/config.example.toml).
@@ -28,27 +37,31 @@ Support broadcast to [Telegram](#-support-broadcast-methods)
 tg_bot_token = ""
 tg_chat_id = ""
 ```
+
 Fill these fields with your Telegram Bot Token and Chat ID to enable the Telegram broadcast feature.
 
-
 ## 🗝️ Features
+
 * No Pro/Pro+/Premium TradingView account requested.
-* Supported [Dicord](https://discord.com/) monitoring.
+- Supported [Dicord](https://discord.com/) monitoring.
   
 ## 🚩 How it works ?
+
 Listen to the email inbox and transfer the TradingView alert email into the webhook message.
 
-
 ## ⚓ Requirements
+
 * Python 3.8.1 or latest (*Developed in Python 3.8.1 & 3.10.11 & 3.11.6)
-* A TradingView account
-* See the installation guide for more details.
+- A TradingView account
+- See the installation guide for more details.
 
 ## 👾 Getting Started
+
 - To install locally or on Docker, check out the [Getting Started guide](docs/gettingstarted.md).
 - To install on the cloud, check out the [Cloud Versions](docs/cloud-versions/cloud-versions.md).
 
 ##### Comparison - Local vs Docker vs Cloud
+
 | | Local (traditional) | Local (ngrok) | Docker (ngrok) | Cloud |
 | --- | --- | --- |--- | --- |
 | **Uptime** | Depends on running the environment | Depends on running the environment | Depends on running the environment | 24/7 |
@@ -79,40 +92,48 @@ Listen to the email inbox and transfer the TradingView alert email into the webh
 1. All applications support Webhook, for example, Discord, 3commas, etc.
 2. See the dedicated provider docs for more details.
 
-
 ## 📬 Notice
+
 #### Local (traditional)
+
 * The program will read the incoming email and mark it as read.
-* It is suggested to create a new email account for the best performance and risk management.
-* The webhook message will not be sent immediately due to the latency of the email service provider & TradingView. It will normally take about **2-8 seconds** before the webhook message is sent. (**mainly depends on the network traffic between TradingView and your email service provider**) Please consider carefully before using the program for fast-moving markets.
+- It is suggested to create a new email account for the best performance and risk management.
+- The webhook message will not be sent immediately due to the latency of the email service provider & TradingView. It will normally take about **2-8 seconds** before the webhook message is sent. (**mainly depends on the network traffic between TradingView and your email service provider**) Please consider carefully before using the program for fast-moving markets.
 
 ## 🦔 Potential Risk
+
 #### Local (traditional)
+
 * Email accounts may be locked because of high-frequency IMAP action.
-    - Reports have been received that some user was locked by Outlook.
+  - Reports have been received that some user was locked by Outlook.
 
 ## 🗯️ Combination
+
 You can combine the program with other services.
 For example,
-* You may use [TradingView-Webhook-Bot](https://github.com/fabston/TradingView-Webhook-Bot) to spread the webhook message.
-* You may send a webhook to [3commas](https://3commas.io/) for auto trading.
-* You may send a webhook to [Discord](https://discord.com/) for sharing the signal.
+- You may use [TradingView-Webhook-Bot](https://github.com/fabston/TradingView-Webhook-Bot) to spread the webhook message.
+- You may send a webhook to [3commas](https://3commas.io/) for auto trading.
+- You may send a webhook to [Discord](https://discord.com/) for sharing the signal.
 
 ## :question: FAQ
-* **Q: Some exchnage banned my IP. What should I do?**
-    - A: You may use a proxy to bypass the IP ban. You should see there is a proxy option in the config file. Related issue: [#69](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/69)
 
+* **Q: Some exchnage banned my IP. What should I do?**
+  - A: You may use a proxy to bypass the IP ban. You should see there is a proxy option in the config file. Related issue: [#69](https://github.com/soranoo/TradingView-Free-Webhook-Alerts/issues/69)
 
 ## ⭐ TODO
+
 * N/A
 
 ## 🐛 Known Issues
+
 * N/A
 
 ## 🤖 Useful Links
+
 * Update TradingView `Email-To-SMS`: [LINK](https://www.tradingview.com/support/solutions/43000474398-how-to-change-the-email-to-sms-address-used-for-alert-notifications/)
 
 ## 💣 Disclaimer
+
 I as the author assume no responsibility for errors or omissions in the contents of the Service.
 
 In no event shall I be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other torts, arising out of or in connection with the use of the Service or the contents of the Service. I reserve the right to make additions, deletions, or modifications to the contents of the Service at any time without prior notice.
@@ -124,6 +145,7 @@ In no event shall I be liable for any special, direct, indirect, consequential, 
 [![Star History Chart](https://api.star-history.com/svg?repos=soranoo/TradingView-Free-Webhook-Alerts&type=Date)](https://www.star-history.com/#soranoo/TradingView-Free-Webhook-Alerts&Date)
 
 ## ☕ Donation
+
 Love the program? Consider a donation to support my work.
 
 [!["Donation"](https://raw.githubusercontent.com/soranoo/Donation/main/resources/image/DonateBtn.png)](https://github.com/soranoo/Donation) <- click me~
