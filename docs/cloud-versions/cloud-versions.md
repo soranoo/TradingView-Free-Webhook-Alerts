@@ -4,8 +4,8 @@
 
 | Service Provider | Website | Setup Doc | Tutorial Video | Remarks |
 | ---------------| -------------- | -------------- | -------------- | -------------- |
-| ![img](imgs/icon-pipedream.svg) | https://pipedream.com/ | [Click ME](pipedream/pipedream.md) | [Youtube](https://youtu.be/kTEcJhz0M98) | Not recommended anymore and won't be updated |
-| ![img](imgs/icon-zapier.svg) | https://zapier.com/ | [Click ME](zapier/zapier.md) |  | |
+| ![img](imgs/icon-pipedream.svg) | https://pipedream.com/ | [Click ME](pipedream/pipedream.md) | [Youtube](https://youtu.be/kTEcJhz0M98) | 10 per day capped 300 per month |
+| ![img](imgs/icon-zapier.svg) | https://zapier.com/ | [Click ME](zapier/zapier.md) |  | 100 per month |
 
 ## 🦾 Special Thanks
 <table>
