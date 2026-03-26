@@ -29,7 +29,7 @@ dependencies = [
     "pyfiglet==1.0.2",
     "pygments==2.18.0",
     "pyngrok>=7.2.11",
-    "requests==2.32.4",
+    "requests==2.33.0",
     "rich==14.3.3",
     "toml==0.10.2",
     "urllib3==2.6.0",
